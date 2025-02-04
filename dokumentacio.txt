@@ -1,77 +1,144 @@
-Telep-Baja
+-- Vlanok --
 
 vlan Admin -->341
 vlan Titkarsag -->342
 vlan vezetoseg -->343
 
-
-ISP Pest
+--- ISP Pest ---
 
 S0/2/0 - 30.30.30.2/30
-Address:   30.30.30.0
-Netmask:   255.255.255.252
-Wildcard:  0.0.0.3
+Address:   30.30.30.2
+Netmask:   255.255.255.248
+Wildcard:  0.0.0.7
 =>
-Network:   30.30.30.0/30
+Network:   30.30.30.0/29
+Broadcast: 30.30.30.7
 HostMin:   30.30.30.1
-HostMax:   30.30.30.2
-Broadcast: 30.30.30.3
-Hosts/Net: 2
+HostMax:   30.30.30.6
+Hosts/Net: 6                     
+
 
 ---------------------------------------------------------------------------
 
-S0/2/1 - 30.30.70.1/30
-Address:   30.30.70.0
-Netmask:   255.255.255.252
-Wildcard:  0.0.0.3
+S0/2/1 - 30.30.100.1/30
+Address:   30.30.100.1
+Netmask:   255.255.255.248
+Wildcard:  0.0.0.7
 =>
-Network:   30.30.70.0/30
-HostMin:   30.30.70.1
-HostMax:   30.30.70.2
-Broadcast: 30.30.70.3
-Hosts/Net: 2
+Network:   30.30.100.0/29
+Broadcast: 30.30.100.7
+HostMin:   30.30.100.1
+HostMax:   30.30.100.6
+Hosts/Net: 6   
 
 ---------------------------------------------------------------------------
 
-G0/0/0 - 172.16.3.1/20
+S0/1/0 - 30.30.110.1/29
 
-Address:   172.16.3.0
-Netmask:   255.255.240.0
-Wildcard:  0.0.15.255
+Address:   30.30.110.1
+Netmask:   255.255.255.248
+Wildcard:  0.0.0.7
 =>
-Network:   172.16.0.0/20
-HostMin:   172.16.0.1
-HostMax:   172.16.15.254
-Broadcast: 172.16.15.255
-Hosts/Net: 4094
+Network:   30.30.110.0/29
+Broadcast: 30.30.110.7
+HostMin:   30.30.110.1
+HostMax:   30.30.110.6
+Hosts/Net: 6                     
 
 ---------------------------------------------------------------------------
 
-G0/1/0 - 172.16.4.1
 
-Address:   172.16.4.0
-Netmask:   255.255.240.0 = 20
-Wildcard:  0.0.15.255
+--- Telep Buda ---
+
+S0/2/1 - 30.30.110.2/29
+
+Address:   30.30.110.2
+Netmask:   255.255.255.248
+Wildcard:  0.0.0.7
 =>
-Network:   172.16.0.0/20
-HostMin:   172.16.0.1
-HostMax:   172.16.15.254
-Broadcast: 172.16.15.255
-Hosts/Net: 4094
+Network:   30.30.110.0/29
+Broadcast: 30.30.110.7
+HostMin:   30.30.110.1
+HostMax:   30.30.110.6
+Hosts/Net: 6      
 
 ---------------------------------------------------------------------------
 
-G0/1/1 - 172.16.5.1
-
-Address:   172.16.5.0
-Netmask:   255.255.240.0
-Wildcard:  0.0.15.255
+G0/0/0 - 172.16.4.1/25
+Address:   172.16.4.1
+Netmask:   255.255.255.128
+Wildcard:  0.0.0.127
 =>
-Network:   172.16.0.0/20
-HostMin:   172.16.0.1
-HostMax:   172.16.15.254
-Broadcast: 172.16.15.255
-Hosts/Net: 4094
+Network:   172.16.4.0/25
+Broadcast: 172.16.4.127
+HostMin:   172.16.4.1
+HostMax:   172.16.4.126
+Hosts/Net: 126
+
+---------------------------------------------------------------------------
+
+
+
+--- Telep Pest ---
+
+G0/2/1 - 30.30.100.2/30
+
+Address:   30.30.100.2
+Netmask:   255.255.255.248
+Wildcard:  0.0.0.7
+=>
+Network:   30.30.100.0/29
+Broadcast: 30.30.100.7
+HostMin:   30.30.100.1 
+HostMax:   30.30.100.6
+Hosts/Net: 6
+
+---------------------------------------------------------------------------
+G0/0/0 - 172.16.5.1
+
+Address:   172.16.5.1
+Netmask:   255.255.255.128
+Wildcard:  0.0.0.127
+=>
+Network:   172.16.5.0/25
+Broadcast: 172.16.5.127
+HostMin:   172.16.5.1
+HostMax:   172.16.5.126
+Hosts/Net: 126
+
+-- Linux server --
+
+G9/1 - 172.16.6.10
+
+Address:   172.16.6.10
+Netmask:   255.255.255.128
+Wildcard:  0.0.0.127
+=>
+Network:   172.16.6.0/25
+Broadcast: 172.16.6.127
+HostMin:   172.16.6.1
+HostMax:   172.16.6.126
+Hosts/Net: 126
+
+-- Windows server --
+
+G8/1 - 172.16.7.10
+
+Address:   172.16.7.10
+Netmask:   255.255.255.128
+Wildcard:  0.0.0.127
+=>
+Network:   172.16.7.0/25
+Broadcast: 172.16.7.127
+HostMin:   172.16.7.1
+HostMax:   172.16.7.126
+Hosts/Net: 126
+
+
+
+
+
+
 
 
 
