@@ -1,0 +1,111 @@
+---ISP Pest---
+
+ena
+clock set 12:00:00 25 febr 2025
+conf t
+host ISP Pest
+ena sec class123
+no ip domain-l
+bann motd 'Elaslak :)'
+login bl for 60 attempts 2 within 30
+security passwords min-lenght 8
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface Serial0/2/0
+ip address 30.30.30.2 255.255.255.252
+no sh
+
+interface Serial0/2/1
+ip address 30.30.100.1 255.255.255.252
+no sh
+clock rate 4000000
+
+interface Serial0/1/0
+ip address 30.30.110.1 255.255.255.252
+no sh
+
+
+
+
+
+---Telep Buda---
+
+ena
+clock set 12:00:00 25 febr 2025
+conf t
+host Telep_Buda
+ena sec class123
+no ip domain-l
+bann motd 'Elaslak :)'
+login bl 60 att 2 wi 30
+security passwords min-length 8
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface Serial0/2/1
+no sh
+ip address 30.30.110.2 255.255.255.252
+clock rate 4000000
+
+interface GigabitEthernet0/0/0
+des SW fele
+ip address 172.16.4.1 255.255.255.128
+
+
+---Telep Pest---
+
+ena
+clock set 12:00:00 25 febr 2025
+conf t
+host Telep_Pest
+ena sec class123
+no ip domain-l
+bann motd 'Elaslak :)'
+login bl 60 att 2 wi 30
+security passwords min-length 8
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface Serial0/2/1
+no sh
+ip address 30.30.110.2 255.255.255.252
+des ISP_Pest fele
+
+interface GigabitEthernet0/0/0
+ip address 172.16.4.1 255.255.255.128
+no sh
+des Adam fele
+
+
+

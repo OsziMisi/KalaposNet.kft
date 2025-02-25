@@ -1,0 +1,4 @@
+ISp pest, Telep Buda, Telep Pest routerek full konfigja
+ip-k a megfelelo portokra allitva
+dhcp, dns a Linux serverben beallitva(folyamatban)
+
