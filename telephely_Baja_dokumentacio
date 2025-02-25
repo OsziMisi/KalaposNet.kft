@@ -7,6 +7,8 @@ Telephely Baja
 vlan 341: Rendszergazda
 vlan 342: Adminisztráció
 vlan 343: Vezetőség
+vlan 999: Native
+vlan 1000: Unused
 
 ISP_Baja
 
