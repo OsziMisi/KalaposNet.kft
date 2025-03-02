@@ -81,7 +81,7 @@ conf t
 host Telep_Pest
 ena sec class123
 no ip domain-l
-bann motd 'Elaslak :)'
+bann motd 'Elaslak :)
 login bl 60 att 2 wi 30
 security passwords min-length 8
 
@@ -106,6 +106,155 @@ interface GigabitEthernet0/0/0
 ip address 172.16.4.1 255.255.255.128
 no sh
 des Adam fele
+
+
+---SW12---
+
+ena
+clock set 12:00:00 28 febr 2025
+conf t
+host SW12
+ena sec cisco123
+no ip domain-l
+bann motd 'Elaslak :)'
+
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+
+
+
+---SW9---
+
+ena
+clock set 12:00:00 28 febr 2025
+conf t
+host SW9
+ena sec cisco123
+no ip domain-l
+bann motd 'Elaslak :)'
+
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+vlan 343
+name Vezetoseg
+vlan 342
+name Adminisztracio
+vlan 341
+name Rendszergazda
+
+interface range G1/0/13-G1/0/16
+switchport mode access
+switchport access vlan 343
+
+interface range G1/0/17-G1/0/22
+switchport mode access
+switchport access vlan 342
+
+interface range G1/0/23-G1/0/24
+switchport mode access
+switchport access vlan 341
+exit
+
+interface GigabitEthernet1/0/24
+switchport mode trunk
+switchport trunk allowed vlan 341,342,343
+exit
+
+interface range GigabitEthernet1/0/1-2
+channel-group 1 mode activ
+exit
+
+
+---SW10---
+
+ena
+clock set 12:00:00 28 febr 2025
+conf t
+host SW10
+ena sec cisco123
+no ip domain-l
+bann motd 'Elaslak :)'
+
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+
+---SW11---
+
+ena
+clock set 12:00:00 28 febr 2025
+conf t
+host SW11
+ena sec cisco123
+no ip domain-l
+bann motd 'Elaslak :)'
+
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+
+---Tűzfal---
+interface GigabitEthernet1/1
+nameif inside
+security-level 100
+ip address 172.16.4.1 255.255.255.128
+no shutdown
+
+
+interface GigabitEthernet1/2
+nameif inside
+security-level 100
+ip address 172.16.5.1 255.255.255.128
+no shutdown
+
+
+interface GigabitEthernet1/1
+nameif outside
+security-level 0
+ip address 172.16.4.2 255.255.255.128
+no shutdown
 
 
 
