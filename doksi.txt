@@ -3,4 +3,6 @@ ip-k a megfelelo portokra allitva
 dhcp, dns a Linux serverben beallitva(folyamatban)
 
 02.28
-Sw12 config vlan, alapok,
+Sw(osszes) config vlan, alapok,
+tuzfal kimeno/bemeno portok ipvel ellatasa
+

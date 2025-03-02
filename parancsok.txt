@@ -131,8 +131,14 @@ exec 5
 exit
 ser pass
 
+(portvedelem)
+int range G1/0/3-6
+sh
+int range G1/0/9-23
+sh
 
-
+interface range GigabitEthernet1/0/7 - 8
+channel-group 4 mode desirable
 
 ---SW9---
 
@@ -210,6 +216,13 @@ exec 5
 exit
 ser pass
 
+interface range GigabitEthernet1/0/5 - 6
+channel-group 3 mode active
+
+
+interface range GigabitEthernet1/0/3 - 4
+channel-group 2 mode desirable
+
 
 ---SW11---
 
@@ -234,27 +247,25 @@ exec 5
 exit
 ser pass
 
+interface range GigabitEthernet1/0/7 - 8
+channel-group 4 mode desirable
+
+interface range GigabitEthernet1/0/5 - 6
+channel-group 3 mode active
+
 
 ---Tűzfal---
-interface GigabitEthernet1/1
-nameif inside
-security-level 100
-ip address 172.16.4.1 255.255.255.128
-no shutdown
 
-
-interface GigabitEthernet1/2
-nameif inside
-security-level 100
-ip address 172.16.5.1 255.255.255.128
-no shutdown
-
+enable password cisco123 level 15
 
 interface GigabitEthernet1/1
-nameif outside
-security-level 0
-ip address 172.16.4.2 255.255.255.128
-no shutdown
+ nameif outside
+ security-level 0
+ ip address 172.16.4.2 255.255.255.128
+ no shutdown
+exit
+
+route outside 0.0.0.0 0.0.0.0 172.16.4.1
 
 
 
