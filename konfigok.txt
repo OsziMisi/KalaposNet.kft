@@ -1,0 +1,181 @@
+
+ISP_BOSS (WAN)
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host ISP_BOSS(WAN)
+ena sec class123
+no ip domain-l
+bann motd 'Elaslak :)'
+login bl for 60 attempts 2 within 30
+security passwords min-lenght 8
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface Serial0/1/0
+ip address 30.30.10.1 255.255.255.252
+no sh
+
+interface Serial0/2/0
+clock rate 4000000
+ip address 30.30.30.1 255.255.255.252
+no sh
+
+interface Serial0/1/1
+clock rate 4000000
+ip address 30.30.20.1 255.255.255.252
+no sh
+
+interface Serial0/2/1
+clock rate 4000000
+ip address 30.30.70.1 255.255.255.252
+no sh
+
+------------------------------------
+
+ISP_Szeged
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host ISP_Szeged
+ena sec class123
+no ip domain-l
+bann motd 'Elaslak :)'
+login bl for 60 attempts 2 within 30
+security passwords min-lenght 8
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface Serial0/1/0
+ip address 30.30.20.2 255.255.255.252
+no sh
+
+interface Serial0/1/1
+ip address 30.30.80.1 255.255.255.252
+no sh
+
+------------------------------------
+
+ISP_Szeged_II
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host ISP_Szeged_II
+ena sec class123
+no ip domain-l
+bann motd 'Elaslak :)'
+login bl for 60 attempts 2 within 30
+security passwords min-lenght 8
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface Serial0/2/1
+ip address 30.30.70.2 255.255.255.252
+no sh
+
+interface Serial0/1/1
+clock rate 4000000
+ip address 30.30.90.1 255.255.255.252
+no sh
+
+------------------------------------
+
+Telep_Szeged_I(dhcp)
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host Telep_Szeged_I
+ena sec class123
+no ip domain-l
+bann motd 'Elaslak :)'
+login bl for 60 attempts 2 within 30
+security passwords min-lenght 8
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface Serial0/1/1
+clock rate 4000000
+ip address 30.30.80.2 255.255.255.252
+no sh
+
+interface g0/0/0
+ip address 172.16.2.1 255.255.255.128
+no sh
+
+------------------------------------
+
+Telep_Szeged_II(dhcp)
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host Telep_Szeged_II
+ena sec class123
+no ip domain-l
+bann motd 'Elaslak :)'
+login bl for 60 attempts 2 within 30
+security passwords min-lenght 8
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface Serial0/1/1
+ip address 30.30.90.2 255.255.255.252
+no sh
+
+interface g0/0/0
+ip address 172.16.3.1 255.255.255.128
+no sh
