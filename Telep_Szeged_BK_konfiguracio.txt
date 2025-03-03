@@ -7,9 +7,9 @@ conf t
 host ISP_BOSS(WAN)
 ena sec class123
 no ip domain-l
-bann motd 'Elaslak :)'
-login bl for 60 attempts 2 within 30
-security passwords min-lenght 8
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+login block-for 60 attempts 2 within 30
+security passwords min-length 8
 
 lin con 0
 pass cisco123
@@ -52,9 +52,9 @@ conf t
 host ISP_Szeged
 ena sec class123
 no ip domain-l
-bann motd 'Elaslak :)'
-login bl for 60 attempts 2 within 30
-security passwords min-lenght 8
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+login block-for 60 attempts 2 within 30
+security passwords min-length 8
 
 lin con 0
 pass cisco123
@@ -86,9 +86,9 @@ conf t
 host ISP_Szeged_II
 ena sec class123
 no ip domain-l
-bann motd 'Elaslak :)'
-login bl for 60 attempts 2 within 30
-security passwords min-lenght 8
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+login block-for 60 attempts 2 within 30
+security passwords min-length 8
 
 lin con 0
 pass cisco123
@@ -121,9 +121,9 @@ conf t
 host Telep_Szeged_I
 ena sec class123
 no ip domain-l
-bann motd 'Elaslak :)'
-login bl for 60 attempts 2 within 30
-security passwords min-lenght 8
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+login block-for 60 attempts 2 within 30
+security passwords min-length 8
 
 lin con 0
 pass cisco123
@@ -136,6 +136,13 @@ login
 exec 5
 exit
 ser pass
+
+ip dhcp excluded-address 172.16.2.1 172.16.2.99
+ip dhcp excluded-address 172.16.2.151 172.16.2.254
+ip dhcp pool TELEP_SZEGED_I_DHCP
+network 172.16.2.0 255.255.255.128
+default-router 172.16.2.1
+dns-server 8.8.8.8
 
 interface Serial0/1/1
 clock rate 4000000
@@ -156,9 +163,9 @@ conf t
 host Telep_Szeged_II
 ena sec class123
 no ip domain-l
-bann motd 'Elaslak :)'
-login bl for 60 attempts 2 within 30
-security passwords min-lenght 8
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+login block-for 60 attempts 2 within 30
+security passwords min-length 8
 
 lin con 0
 pass cisco123
@@ -172,6 +179,14 @@ exec 5
 exit
 ser pass
 
+
+ip dhcp excluded-address 172.16.3.1 172.16.3.99
+ip dhcp excluded-address 172.16.3.151 172.16.3.254
+ip dhcp pool TELEP_SZEGED_II_DHCP
+network 172.16.3.0 255.255.255.128
+default-router 172.16.3.1
+dns-server 8.8.8.8
+
 interface Serial0/1/1
 ip address 30.30.90.2 255.255.255.252
 no sh
@@ -179,3 +194,172 @@ no sh
 interface g0/0/0
 ip address 172.16.3.1 255.255.255.128
 no sh
+
+------------------------------------
+
+SW8
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host SW8
+ena sec cisco123
+no ip domain-l
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+vlan 343
+name Vezetoseg
+vlan 342
+name Adminisztracio
+vlan 341
+name Rendszergazda
+
+interface G1/1/1
+no switchport
+ip address 172.16.2.2
+ip helper-address 172.16.2.1
+no sh
+
+------------------------------------
+
+SW5
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host SW5
+ena sec cisco123
+no ip domain-l
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+vlan 343
+name Vezetoseg
+vlan 342
+name Adminisztracio
+vlan 341
+name Rendszergazda
+
+interface range G1/0/1, G1/0/2
+switchport mode trunk
+switchport trunk allowed vlan 341,342,343
+exit
+
+interface range G1/0/21-G1/0/23
+switchport mode access
+switchport access vlan 343
+
+------------------------------------
+
+SW6
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host SW6
+ena sec cisco123
+no ip domain-l
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+vlan 343
+name Vezetoseg
+vlan 342
+name Adminisztracio
+vlan 341
+name Rendszergazda
+
+interface range G1/0/2, G1/0/3, G1/1/1
+switchport mode trunk
+switchport trunk allowed vlan 341,342,343
+exit
+
+interface range G1/0/21-G1/0/23
+switchport mode access
+switchport access vlan 342
+
+------------------------------------
+
+SW7
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host SW7
+ena sec cisco123
+no ip domain-l
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+vlan 343
+name Vezetoseg
+vlan 342
+name Adminisztracio
+vlan 341
+name Rendszergazda
+
+interface G1/1/1
+no switchport
+ip address 172.16.3.2 255.255.255.128
+ip helper-address 172.16.3.1
+
+interface range G1/0/3, G1/0/4, G1/1/1
+switchport mode trunk
+switchport trunk allowed vlan 341,342,343
+exit
+
+interface range G1/0/24
+switchport mode access
+switchport access vlan 341
+
+
+
