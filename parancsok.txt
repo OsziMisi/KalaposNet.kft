@@ -4,9 +4,9 @@ ena
 clock set 12:00:00 25 febr 2025
 conf t
 host ISP Pest
-ena sec class123
+ena sec cisco123
 no ip domain-l
-bann motd 'Elaslak :)'
+banner mo 'Private!'
 login bl for 60 attempts 2 within 30
 security passwords min-lenght 8
 
@@ -45,9 +45,9 @@ ena
 clock set 12:00:00 25 febr 2025
 conf t
 host Telep_Buda
-ena sec class123
+ena sec cisco123
 no ip domain-l
-bann motd 'Elaslak :)'
+banner mo 'Private!'
 login bl 60 att 2 wi 30
 security passwords min-length 8
 
@@ -81,7 +81,7 @@ conf t
 host Telep_Pest
 ena sec class123
 no ip domain-l
-bann motd 'Elaslak :)
+banner mo 'Private!'
 login bl 60 att 2 wi 30
 security passwords min-length 8
 
@@ -116,8 +116,7 @@ conf t
 host SW12
 ena sec cisco123
 no ip domain-l
-bann motd 'Elaslak :)'
-
+banner mo 'Private!'
 
 lin con 0
 pass cisco123
@@ -148,7 +147,7 @@ conf t
 host SW9
 ena sec cisco123
 no ip domain-l
-bann motd 'Elaslak :)'
+banner mo 'Private!'
 
 
 lin con 0
@@ -201,7 +200,7 @@ conf t
 host SW10
 ena sec cisco123
 no ip domain-l
-bann motd 'Elaslak :)'
+banner mo 'Private!'
 
 
 lin con 0
@@ -232,7 +231,7 @@ conf t
 host SW11
 ena sec cisco123
 no ip domain-l
-bann motd 'Elaslak :)'
+banner mo 'Private!'
 
 
 lin con 0
@@ -253,6 +252,9 @@ channel-group 4 mode desirable
 interface range GigabitEthernet1/0/5 - 6
 channel-group 3 mode active
 
+interface GigabitEthernet1/0/24
+no swi
+
 
 ---Tűzfal---
 
@@ -266,6 +268,22 @@ interface GigabitEthernet1/1
 exit
 
 route outside 0.0.0.0 0.0.0.0 172.16.4.1
+
+interface GigabitEthernet1/2
+ nameif inside
+ security-level 100
+ ip address 172.16.5.1 255.255.255.128
+ no shutdown
+exit
+
+
+ssh 172.16.5.0 255.255.255.128 inside 
+crypto key generate rsa modulus 2048
+yes
+username admin password cisco123
+
+
+ip helper-address 172.16.7.10
 
 
 
