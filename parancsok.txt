@@ -35,7 +35,15 @@ interface Serial0/1/0
 ip address 30.30.110.1 255.255.255.252
 no sh
 
-
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
 
 
 
@@ -71,6 +79,12 @@ clock rate 4000000
 interface GigabitEthernet0/0/0
 des SW fele
 ip address 172.16.4.1 255.255.255.128
+
+interface port-channel 1
+swi mod trunk
+
+interface port-channel 4
+swi mod trunk
 
 
 ---Telep Pest---
@@ -147,7 +161,7 @@ conf t
 host SW9
 ena sec cisco123
 no ip domain-l
-banner mo 'Private!'
+banner mo 'Private Network!'
 
 
 lin con 0
@@ -191,6 +205,11 @@ interface range GigabitEthernet1/0/1-2
 channel-group 1 mode activ
 exit
 
+interface port-channel 1
+swi mod trunk
+
+interface port-channel 2
+swi mod trunk
 
 ---SW10---
 
@@ -200,7 +219,7 @@ conf t
 host SW10
 ena sec cisco123
 no ip domain-l
-banner mo 'Private!'
+banner mo 'Private Network!'
 
 
 lin con 0
@@ -222,6 +241,11 @@ channel-group 3 mode active
 interface range GigabitEthernet1/0/3 - 4
 channel-group 2 mode desirable
 
+interface port-channel 3
+swi mod trunk
+
+interface port-channel 2
+swi mod trunk
 
 ---SW11---
 
@@ -255,6 +279,11 @@ channel-group 3 mode active
 interface GigabitEthernet1/0/24
 no swi
 
+interface port-channel 4
+swi mod trunk
+
+interface port-channel 3
+swi mod trunk
 
 ---Tűzfal---
 
