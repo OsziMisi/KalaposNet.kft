@@ -6,3 +6,11 @@ dhcp, dns a Linux serverben beallitva(folyamatban)
 Sw(osszes) config vlan, alapok,
 tuzfal kimeno/bemeno portok ipvel ellatasa
 
+03.03
+-banner uzenet javitasa
+
+03.04
+-ospf ipv4 el az osszes routerben
+-fizikai tervrajz javitasa
+-ssh javitasa a Telep routerekben
+-BOSS bal oldalag eigrp, jobb ospf
