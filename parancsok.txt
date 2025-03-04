@@ -6,9 +6,9 @@ conf t
 host ISP Pest
 ena sec cisco123
 no ip domain-l
-banner mo 'Private!'
-login bl for 60 attempts 2 within 30
-security passwords min-lenght 8
+banner mo 'Private Network!'
+login bl 60 attempts 2 within 30
+security passwords min-len 8
 
 lin con 0
 pass cisco123
@@ -45,6 +45,77 @@ login local
 transport input ssh
 exit
 
+(portvedelem)
+int r G0/0/0-2
+sh
+
+router ospf 10
+router-id 2.2.2.2
+network 30.30.30.0 000.000.000.003 area 0
+network 30.30.100.0 000.000.000.003 area 0
+network 30.30.110.0 000.000.000.003 area 0
+
+---ISP_BOSS---
+(portvedelem)
+int r G0/0/0-2
+sh
+int S0/1/0
+sh
+int S0/1/1
+sh
+
+
+router ospf 10
+router-id 1.1.1.1
+network 30.30.30.0 000.000.000.003 area 0
+
+
+interface Serial0/2/0
+ip address 30.30.30.1 255.255.255.252
+no sh
+des ISP_Pest fele
+
+
+
+---Telep Pest---
+
+ena
+clock set 12:00:00 25 febr 2025
+conf t
+host Telep_Pest
+ena sec class123
+no ip domain-l
+banner mo 'Private Network!'
+login bl 60 attempts 2 within 30
+security passwords min-len 8
+
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface Serial0/2/1
+no sh
+ip address 30.30.110.2 255.255.255.252
+des ISP_Pest fele
+
+interface GigabitEthernet0/0/0
+ip address 172.16.4.1 255.255.255.128
+no sh
+des Adam fele
+
+router ospf 10
+router-id 3.3.3.3
+network 30.30.100.0 000.000.000.003 area 0
+
 
 
 ---Telep Buda---
@@ -55,9 +126,9 @@ conf t
 host Telep_Buda
 ena sec cisco123
 no ip domain-l
-banner mo 'Private!'
-login bl 60 att 2 wi 30
-security passwords min-length 8
+banner mo 'Private Network!'
+login bl 60 attempts 2 within 30
+security passwords min-len 8
 
 lin con 0
 pass cisco123
@@ -86,41 +157,11 @@ swi mod trunk
 interface port-channel 4
 swi mod trunk
 
-
----Telep Pest---
-
-ena
-clock set 12:00:00 25 febr 2025
-conf t
-host Telep_Pest
-ena sec class123
-no ip domain-l
-banner mo 'Private!'
-login bl 60 att 2 wi 30
-security passwords min-length 8
-
-lin con 0
-pass cisco123
-login
-logg syn
-exec 5
-line vty 0 15
-pass cisco123
-login
-exec 5
-exit
-ser pass
-
-interface Serial0/2/1
-no sh
-ip address 30.30.110.2 255.255.255.252
-des ISP_Pest fele
-
-interface GigabitEthernet0/0/0
-ip address 172.16.4.1 255.255.255.128
-no sh
-des Adam fele
-
+(porgalomiranyitas)
+router ospf 10
+router-id 4.4.4.4
+network 30.30.110.0 000.000.000.003 area 0
+network 30.30.30.0 000.000.000.003 area 0
 
 ---SW12---
 
@@ -130,7 +171,7 @@ conf t
 host SW12
 ena sec cisco123
 no ip domain-l
-banner mo 'Private!'
+banner mo 'Private Network!'
 
 lin con 0
 pass cisco123
@@ -152,6 +193,82 @@ sh
 
 interface range GigabitEthernet1/0/7 - 8
 channel-group 4 mode desirable
+
+
+
+---SW11---
+
+ena
+clock set 12:00:00 28 febr 2025
+conf t
+host SW11
+ena sec cisco123
+no ip domain-l
+banner mo 'Private Network!'
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface range GigabitEthernet1/0/7 - 8
+channel-group 4 mode desirable
+
+interface range GigabitEthernet1/0/5 - 6
+channel-group 3 mode active
+
+interface GigabitEthernet1/0/24
+no swi
+
+interface port-channel 4
+swi mod trunk
+
+interface port-channel 3
+swi mod trunk
+
+---SW10---
+
+ena
+clock set 12:00:00 28 febr 2025
+conf t
+host SW10
+ena sec cisco123
+no ip domain-l
+banner mo 'Private Network!'
+
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface range GigabitEthernet1/0/5 - 6
+channel-group 3 mode active
+
+
+interface range GigabitEthernet1/0/3 - 4
+channel-group 2 mode desirable
+
+interface port-channel 3
+swi mod trunk
+
+interface port-channel 2
+swi mod trunk
+
 
 ---SW9---
 
@@ -211,79 +328,7 @@ swi mod trunk
 interface port-channel 2
 swi mod trunk
 
----SW10---
 
-ena
-clock set 12:00:00 28 febr 2025
-conf t
-host SW10
-ena sec cisco123
-no ip domain-l
-banner mo 'Private Network!'
-
-
-lin con 0
-pass cisco123
-login
-logg syn
-exec 5
-line vty 0 15
-pass cisco123
-login
-exec 5
-exit
-ser pass
-
-interface range GigabitEthernet1/0/5 - 6
-channel-group 3 mode active
-
-
-interface range GigabitEthernet1/0/3 - 4
-channel-group 2 mode desirable
-
-interface port-channel 3
-swi mod trunk
-
-interface port-channel 2
-swi mod trunk
-
----SW11---
-
-ena
-clock set 12:00:00 28 febr 2025
-conf t
-host SW11
-ena sec cisco123
-no ip domain-l
-banner mo 'Private!'
-
-
-lin con 0
-pass cisco123
-login
-logg syn
-exec 5
-line vty 0 15
-pass cisco123
-login
-exec 5
-exit
-ser pass
-
-interface range GigabitEthernet1/0/7 - 8
-channel-group 4 mode desirable
-
-interface range GigabitEthernet1/0/5 - 6
-channel-group 3 mode active
-
-interface GigabitEthernet1/0/24
-no swi
-
-interface port-channel 4
-swi mod trunk
-
-interface port-channel 3
-swi mod trunk
 
 ---Tűzfal---
 
