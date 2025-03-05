@@ -233,6 +233,15 @@ swi mod trunk
 interface port-channel 3
 swi mod trunk
 
+
+int GigabitEthernet 1/0/24
+swi mod acc
+swi port-security 
+swi nonegotiate 
+
+(max mac cim)
+swi port-security maximum 10
+
 ---SW10---
 
 ena
