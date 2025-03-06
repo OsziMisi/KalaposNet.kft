@@ -25,7 +25,7 @@ password cisco
 login
 exit
 
-bann motd "Engedely nelkuli hozzaferes szigoruan tilos!"
+bann motd "Unarthorized access is strictly probhibited!"
 
 vlan 341
 name Rendszergazda
@@ -107,7 +107,7 @@ password cisco
 login
 exit
 
-bann motd "Engedely nelkuli hozzaferes szigoruan tilos!"
+bann motd "Unarthorized access is strictly probhibited!"
 
 vtp domain baja
 vtp mode client
@@ -164,7 +164,7 @@ password cisco
 login
 exit
 
-bann motd "Engedely nelkuli hozzaferes szigoruan tilos!"
+bann motd "Unarthorized access is strictly probhibited!"
 
 vtp domain baja
 vtp mode client
@@ -220,7 +220,7 @@ password cisco
 login
 exit
 
-bann motd "Engedely nelkuli hozzaferes szigoruan tilos!"
+bann motd "Unarthorized access is strictly probhibited!"
 
 vtp domain baja
 vtp mode client
@@ -277,7 +277,7 @@ password cisco
 login
 exit
 
-bann motd "Engedely nelkuli hozzaferes szigoruan tilos!"
+bann motd "Unarthorized access is strictly probhibited!"
 
 vtp domain baja
 vtp mode client
