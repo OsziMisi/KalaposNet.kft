@@ -77,9 +77,10 @@ switchport access vlan 1000
 sh
 
 int g1/1/1
-no switchport
-ip add 172.16.1.2 255.255.255.128
-no sh
+no shutdown
+switchport mode trunk
+switchport trunk native vlan 999
+switchport trunk allowed vlan 341,342,343,999
 des Telep_Baja fele
 exit
 
