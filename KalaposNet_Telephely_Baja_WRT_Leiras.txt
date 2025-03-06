@@ -1,7 +1,7 @@
 Statikus IP
 Internet IP: 30.30.60.2
 Subnet Mask: 255.255.255.252
-Default Gateway: 30.30.60.1
+Default Gateway: 30.30.60.2
 DNS: 8.8.8.8
 
 DHCP Beállítások
