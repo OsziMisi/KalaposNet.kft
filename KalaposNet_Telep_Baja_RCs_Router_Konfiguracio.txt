@@ -1,0 +1,186 @@
+========================================================================
+
+KalaposNet Kft
+Telep Baja
+Router konfigurációk
+
+========================================================================
+
+TELEP_BAJA
+
+ena 
+clock set 20:00:00 25 feb 2025
+conf t
+host Telep_Baja
+ena secret cisco
+no ip domain-l
+
+lin con 0 
+password cisco
+login
+logging syn
+
+line vty 0 15
+password cisco
+login
+exit
+
+bann motd "Unarthorized access is strictly probhibited!"
+
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+
+int g0/0/1
+no shutdown
+ip add 172.16.1.1 255.255.255.128
+des Switch_Baja_Egy fele
+
+int g0/0/0
+ip add 30.30.50.1 255.255.255.252
+no shutdown
+des Baja_VPN fele
+
+int s0/1/0
+ip add 30.30.40.2 255.255.255.252
+no shutdown
+des ISP_Baja fele
+
+========================================================================
+
+ISP_Baja
+
+ena 
+clock set 20:00:00 25 feb 2025
+conf t
+host ISP_Baja
+ena secret cisco
+no ip domain-l
+
+lin con 0 
+password cisco
+login
+logging syn
+
+line vty 0 15
+password cisco
+login
+exit
+
+bann motd "Unarthorized access is strictly probhibited!"
+
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+
+int s0/1/0
+ip add 30.30.40.1 255.255.255.252
+clock rate 4000000
+no shutdown
+des Telep_Baja fele
+
+int s0/1/1
+ip add 30.30.10.1 255.255.255.252
+clock rate 4000000
+no shutdown
+des ISP_Boss fele
+
+========================================================================
+
+BAJA_VPN
+
+ena 
+clock set 20:00:00 25 feb 2025
+conf t
+host Baja_VPN
+ena secret cisco
+no ip domain-l
+
+lin con 0 
+password cisco
+login
+logging syn
+
+line vty 0 15
+password cisco
+login
+exit
+
+bann motd "Unarthorized access is strictly probhibited!"
+
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+
+int g0/0/1
+ip add 30.30.50.1 255.255.255.252
+no shutdown
+des Telep_Baja fele
+
+int g0/0/0
+ip add 30.30.60.2 255.255.255.252
+no shutdown
+des Home_Router fele
+
+
+========================================================================
+
+ISP_BOSS (WAN)
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host ISP_BOSS(WAN)
+ena sec class123
+no ip domain-l
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+login block-for 60 attempts 2 within 30
+security passwords min-length 8
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface Serial0/1/0
+ip address 30.30.10.w 255.255.255.252
+no sh
+
+interface Serial0/2/0
+clock rate 4000000
+ip address 30.30.30.1 255.255.255.252
+no sh
+
+interface Serial0/1/1
+clock rate 4000000
+ip address 30.30.20.1 255.255.255.252
+no sh
+
+interface Serial0/2/1
+clock rate 4000000
+ip address 30.30.70.1 255.255.255.252
+no sh
+
+

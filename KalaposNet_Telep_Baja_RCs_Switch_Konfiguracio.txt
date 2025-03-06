@@ -84,6 +84,20 @@ switchport trunk allowed vlan 341,342,343,999
 des Telep_Baja fele
 exit
 
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+int vlan 1
+ip add 172.16.1.2 255.255.255.128 
+no sh
+exit
+ip default-gateway 172.16.1.1
+
 spanning-tree mode rapid-pvst
 
 
