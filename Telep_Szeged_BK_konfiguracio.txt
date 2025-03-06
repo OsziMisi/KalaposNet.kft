@@ -25,22 +25,50 @@ ser pass
 
 interface Serial0/1/0
 ip address 30.30.10.1 255.255.255.252
+ISP_BAJA fele
 no sh
 
 interface Serial0/2/0
 clock rate 4000000
 ip address 30.30.30.1 255.255.255.252
+description ISP_PEST fele
 no sh
 
 interface Serial0/1/1
 clock rate 4000000
 ip address 30.30.20.1 255.255.255.252
+description ISP_Szeged fele
 no sh
 
 interface Serial0/2/1
 clock rate 4000000
 ip address 30.30.70.1 255.255.255.252
+description ISP_Szeged_II fele
 no sh
+
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
+
+router eigrp 10 
+eigrp router-id 1.1.1.1
+network 30.30.10.0 0.0.0.3
+network 30.30.20.0 0.0.0.3
+no auto-summary 
+exit
+
+router ospf 10
+router-id 1.1.1.1
+network 30.30.30.0 0.0.0.3 area 0
+network 30.30.70.0 0.0.0.3 area 0
+exit
+
 
 ------------------------------------
 
@@ -69,12 +97,32 @@ exit
 ser pass
 
 interface Serial0/1/0
-ip address 30.30.20.2 255.255.255.252
+ip address 30.30.20.1 255.255.255.252
+description ISP_BOSS fele
 no sh
 
 interface Serial0/1/1
 ip address 30.30.80.1 255.255.255.252
+description Telep_Szeged_I fele
 no sh
+
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
+
+router eigrp 10 
+eigrp router-id 2.2.2.2
+network 30.30.20.0 0.0.0.3
+network 30.30.80.0 0.0.0.3
+no auto-summary 
+exit
+
 
 ------------------------------------
 
@@ -104,12 +152,30 @@ ser pass
 
 interface Serial0/2/1
 ip address 30.30.70.2 255.255.255.252
+description ISP_BOSS fele
 no sh
 
 interface Serial0/1/1
 clock rate 4000000
 ip address 30.30.90.1 255.255.255.252
+description Telep_Szeged_II fele
 no sh
+
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
+
+router ospf 10
+router-id 2.2.2.2
+network 30.30.70.0 0.0.0.3 area 0
+network 30.30.90.0 0.0.0.3 area 0
+exit
 
 ------------------------------------
 
@@ -147,11 +213,31 @@ dns-server 8.8.8.8
 interface Serial0/1/1
 clock rate 4000000
 ip address 30.30.80.2 255.255.255.252
+description ISP_Szeged fele
 no sh
 
 interface g0/0/0
 ip address 172.16.2.1 255.255.255.128
+description SW8 fele
 no sh
+
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
+
+router eigrp 10 
+eigrp router-id 3.3.3.3
+network 172.16.2.0 0.0.0.127
+network 30.30.80.0 0.0.0.3
+no auto-summary 
+exit
+
 
 ------------------------------------
 
@@ -189,11 +275,29 @@ dns-server 8.8.8.8
 
 interface Serial0/1/1
 ip address 30.30.90.2 255.255.255.252
+description ISP_Szeged_II fele
 no sh
 
 interface g0/0/0
 ip address 172.16.3.1 255.255.255.128
+description SW7 fele
 no sh
+
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
+
+router ospf 10
+router-id 3.3.3.3
+network 172.16.3.0 0.0.0.127 area 0
+network 30.30.90.0 0.0.0.3 area 0
+exit
 
 ------------------------------------
 
@@ -226,12 +330,23 @@ vlan 342
 name Adminisztracio
 vlan 341
 name Rendszergazda
+vlan 999
+name Native
+vlan 1000
+name NemHasznalt
+
+ip default-gateway 172.16.2.1
 
 interface G1/1/1
 no switchport
-ip address 172.16.2.2
+ip address 172.16.2.2 255.255.255.128
 ip helper-address 172.16.2.1
 no sh
+
+interface G1/0/4
+switchport mode trunk
+switchport trunk allowed vlan 341,342,343,999,1000
+exit
 
 ------------------------------------
 
@@ -264,13 +379,17 @@ vlan 342
 name Adminisztracio
 vlan 341
 name Rendszergazda
+vlan 999
+name Native
+vlan 1000
+name NemHasznalt
 
 interface range G1/0/1, G1/0/2
 switchport mode trunk
-switchport trunk allowed vlan 341,342,343
+switchport trunk allowed vlan 341,342,343,999,1000
 exit
 
-interface range G1/0/21-G1/0/23
+interface range G1/0/21-G1/0/24
 switchport mode access
 switchport access vlan 343
 
@@ -305,13 +424,17 @@ vlan 342
 name Adminisztracio
 vlan 341
 name Rendszergazda
+vlan 999
+name Native
+vlan 1000
+name NemHasznalt
 
 interface range G1/0/2, G1/0/3, G1/1/1
 switchport mode trunk
-switchport trunk allowed vlan 341,342,343
+switchport trunk allowed vlan 341,342,343,999,1000
 exit
 
-interface range G1/0/21-G1/0/23
+interface range G1/0/21-G1/0/24
 switchport mode access
 switchport access vlan 342
 
@@ -346,20 +469,26 @@ vlan 342
 name Adminisztracio
 vlan 341
 name Rendszergazda
+vlan 999
+name Native
+vlan 1000
+name NemHasznalt
+
+ip default-gateway 172.16.3.1
 
 interface G1/1/1
 no switchport
 ip address 172.16.3.2 255.255.255.128
 ip helper-address 172.16.3.1
 
-interface range G1/0/3, G1/0/4, G1/1/1
+interface range G1/0/3, G1/0/4
 switchport mode trunk
-switchport trunk allowed vlan 341,342,343
+switchport trunk allowed vlan 341,342,343,999,1000
 exit
 
-interface range G1/0/24
+interface range G1/0/20-G1/0/24
 switchport mode access
-switchport access vlan 341
+switchport access vlan 342
 
 
 
