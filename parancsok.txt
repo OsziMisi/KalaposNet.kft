@@ -230,11 +230,17 @@ name Native
 vlan 1000
 name nemhasznalt
 
-×(trunk)×
-interface G1/0/24
+×(trunk-vlan)×
+interface port-channel 4
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
+
+interface port-channel 1
+switchport mode trunk
+switchport trunk native vlan 999
+switchport trunk allowed vlan 341,342,343,999
+exit
 
 
 ×(no vlan1)×
@@ -505,12 +511,16 @@ switchport mode access
 switchport access vlan 341
 exit
 
-ide vl 999
+interface G1/0/24
+switchport mode access
+switchport access vlan 999
+exit
 
-×(trunking)×
+
+×(etherchannel)×
 int range GigabitEthernet1/0/1-2
 channel-group 1 mode activ
-exit
+
 int range GigabitEthernet1/0/3 - 4
 channel-group 2 mode desirable
 
@@ -519,13 +529,41 @@ swi mod trunk
 interface port-channel 2
 swi mod trunk
 
-int GigabitEthernet 1/0/22
+
+×(trunk-vlan)×
+interface port-channel 2
+switchport mode trunk
+switchport trunk native vlan 999
+switchport trunk allowed vlan 341,342,343,999
+
+interface port-channel 1
+switchport mode trunk
+switchport trunk native vlan 999
+switchport trunk allowed vlan 341,342,343,999
+exit
+
+
+×portvedelem)×
+int r G1/0/5-12
+sh
+swi mod acc
+swi acc vl 1000
+exit
+
+int r G1/1/1-4
+sh
+swi mod acc
+swi acc vl 1000
+
+int vl 1
+sh
+
+int r G1/0/17-19
 swi mod acc
 swi port-security 
 swi nonegotiate 
-
-(max mac cim)
 swi port-security maximum 10
+
 
 ---Telep Pest---------------------------------
 
@@ -566,7 +604,12 @@ router ospf 10
 router-id 6.6.6.6
 network 30.30.100.0 000.000.000.003 area 0
 
+(portvedelem)
+int r G0/0/1-2,G0/1/0-3
+sh
 
+int S0/2/0
+sh
 
 
 ---Tűzfal---
