@@ -165,8 +165,9 @@ exit
 ser pass
 
 interface Serial0/1/0
-ip address 30.30.10.w 255.255.255.252
+ip address 30.30.10.2 255.255.255.252
 no sh
+des ISP_Baja fele
 
 interface Serial0/2/0
 clock rate 4000000
@@ -184,3 +185,44 @@ ip address 30.30.70.1 255.255.255.252
 no sh
 
 
+========================================================================
+
+EIGRP
+
+========================================================================
+
+ISP_Boss
+
+router eigrp 10
+eigrp router-id 1.1.1.1
+network 30.30.30.0 0.0.0.3 
+network 30.30.70.0 0.0.0.3 
+network 30.30.10.0 0.0.0.3 
+no auto-summary
+
+ISP_Baja
+
+router eigrp 10
+eigrp router-id 7.7.7.7
+network 30.30.10.0 0.0.0.3 
+network 30.30.40.0 0.0.0.3
+network 30.30.50.0 0.0.0.3
+no auto-summary
+
+Telep_Baja
+
+router eigrp 10
+eigrp router-id 8.8.8.8
+network 30.30.40.0 0.0.0.3
+network 30.30.50.0 0.0.0.3
+network 172.16.1.0 0.0.0.127
+no auto-summary
+
+Baja_VPN
+
+router eigrp 10
+eigrp router-id 9.9.9.9
+network 30.30.50.0 0.0.0.3 
+network 30.30.60.0 0.0.0.3
+network 192.168.100.0 0.0.0.255
+no auto-summary
