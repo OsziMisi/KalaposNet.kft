@@ -46,16 +46,6 @@ ip address 30.30.70.1 255.255.255.252
 description ISP_Szeged_II fele
 no sh
 
-ip domain-name cisco.com
-crypto key generate rsa
-2048
-username rg secret cisco123
-ip ssh version 2
-line vty 0 15
-login local
-transport input ssh
-exit
-
 router eigrp 10 
 eigrp router-id 1.1.1.1
 network 30.30.10.0 0.0.0.3
@@ -71,15 +61,24 @@ network 30.30.70.0 0.0.0.3 area 0
 redistribute eigrp 10 subnets
 exit
 
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
 
 ------------------------------------
 
-ISP_Szeged
+Yettel_Szeged
 
 ena
 clock set 12:00:00 03 mar 2025
 conf t
-host ISP_Szeged
+host Yettel_Szeged
 ena sec class123
 no ip domain-l
 bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
@@ -108,6 +107,15 @@ ip address 30.30.80.1 255.255.255.252
 description Telep_Szeged_I fele
 no sh
 
+router eigrp 10 
+eigrp router-id 2.2.2.2
+network 30.30.20.0 0.0.0.3
+network 30.30.80.0 0.0.0.3
+no auto-summary 
+redistribute ospf 10
+exit
+
+
 ip domain-name cisco.com
 crypto key generate rsa
 2048
@@ -118,23 +126,15 @@ login local
 transport input ssh
 exit
 
-router eigrp 10 
-eigrp router-id 2.2.2.2
-network 30.30.20.0 0.0.0.3
-network 30.30.80.0 0.0.0.3
-no auto-summary 
-redistribute ospf 10
-exit
-
 
 ------------------------------------
 
-ISP_Szeged_II
+Telekom_Szeged
 
 ena
 clock set 12:00:00 03 mar 2025
 conf t
-host ISP_Szeged_II
+host Telekom_Szeged
 ena sec class123
 no ip domain-l
 bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
@@ -164,6 +164,13 @@ ip address 30.30.90.1 255.255.255.252
 description Telep_Szeged_II fele
 no sh
 
+router ospf 10
+router-id 2.2.2.2
+network 30.30.70.0 0.0.0.3 area 0
+network 30.30.90.0 0.0.0.3 area 0
+redistribute eigrp 10 subnets
+exit
+
 ip domain-name cisco.com
 crypto key generate rsa
 2048
@@ -174,21 +181,14 @@ login local
 transport input ssh
 exit
 
-router ospf 10
-router-id 2.2.2.2
-network 30.30.70.0 0.0.0.3 area 0
-network 30.30.90.0 0.0.0.3 area 0
-redistribute eigrp 10 subnets
-exit
-
 ------------------------------------
 
-Telep_Szeged_I(dhcp)
+R_Szeged_Vezetoseg
 
 ena
 clock set 12:00:00 03 mar 2025
 conf t
-host Telep_Szeged_I
+host R_Szeged_Vezetoseg
 ena sec class123
 no ip domain-l
 bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
@@ -207,11 +207,11 @@ exec 5
 exit
 ser pass
 
-ip dhcp excluded-address 172.16.2.1 172.16.2.99
-ip dhcp excluded-address 172.16.2.151 172.16.2.254
-ip dhcp pool TELEP_SZEGED_I_DHCP
-network 172.16.2.0 255.255.255.128
-default-router 172.16.2.1
+ip dhcp excluded-address 172.16.83.1 172.16.83.10
+ip dhcp excluded-address 172.16.83.151 172.16.83.254
+ip dhcp pool VLAN343_Vezetoseg
+network 172.16.83.0 255.255.255.128
+default-router 172.16.83.1
 dns-server 8.8.8.8
 
 interface Serial0/1/1
@@ -225,6 +225,30 @@ ip address 172.16.2.1 255.255.255.128
 description SW8 fele
 no sh
 
+interface g0/0/0.343
+encapsulation dot1Q 343
+ip address 172.16.83.1 255.255.255.128
+description VLAN 343 fele
+no sh
+exit
+
+interface g0/0/0.999
+encapsulation dot1Q 999 native
+ip address 172.16.89.1 255.255.255.128
+description Native
+no sh
+exit
+
+
+router eigrp 10 
+eigrp router-id 3.3.3.3
+network 172.16.2.0 0.0.0.127
+network 30.30.80.0 0.0.0.3
+no auto-summary
+redistribute ospf 10
+passive interface G0/0/0
+exit
+
 ip domain-name cisco.com
 crypto key generate rsa
 2048
@@ -235,23 +259,14 @@ login local
 transport input ssh
 exit
 
-router eigrp 10 
-eigrp router-id 3.3.3.3
-network 172.16.2.0 0.0.0.127
-network 30.30.80.0 0.0.0.3
-no auto-summary
-redistribute ospf 10
-exit
-
-
 ------------------------------------
 
-Telep_Szeged_II(dhcp)
+R_Szeged_Adminisztracio
 
 ena
 clock set 12:00:00 03 mar 2025
 conf t
-host Telep_Szeged_II
+host R_Szeged_Adminisztracio
 ena sec class123
 no ip domain-l
 bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
@@ -271,11 +286,11 @@ exit
 ser pass
 
 
-ip dhcp excluded-address 172.16.3.1 172.16.3.99
-ip dhcp excluded-address 172.16.3.151 172.16.3.254
-ip dhcp pool TELEP_SZEGED_II_DHCP
-network 172.16.3.0 255.255.255.128
-default-router 172.16.3.1
+ip dhcp excluded-address 172.16.82.1 172.16.82.99
+ip dhcp excluded-address 172.16.82.151 172.16.82.254
+ip dhcp pool VLAN343_Adminisztracio
+network 172.16.82.0 255.255.255.128
+default-router 172.16.82.1
 dns-server 8.8.8.8
 
 interface Serial0/1/1
@@ -288,6 +303,28 @@ ip address 172.16.3.1 255.255.255.128
 description SW7 fele
 no sh
 
+interface g0/0/0.342
+encapsulation dot1Q 342
+ip address 172.16.82.1 255.255.255.128
+description VLAN 342 fele
+no sh
+exit
+
+interface g0/0/0.341
+encapsulation dot1Q 341
+ip address 172.16.81.1 255.255.255.128
+description VLAN 341 fele
+no sh
+exit
+
+router ospf 10
+router-id 3.3.3.3
+network 172.16.3.0 0.0.0.127 area 0
+network 30.30.90.0 0.0.0.3 area 0
+redistribute eigrp 10 subnets
+passive interface G0/0/0
+exit
+
 ip domain-name cisco.com
 crypto key generate rsa
 2048
@@ -298,21 +335,14 @@ login local
 transport input ssh
 exit
 
-router ospf 10
-router-id 3.3.3.3
-network 172.16.3.0 0.0.0.127 area 0
-network 30.30.90.0 0.0.0.3 area 0
-redistribute eigrp 10 subnets
-exit
-
 ------------------------------------
 
-SW8
+MLS_Szeged_Vezet
 
 ena
 clock set 12:00:00 03 mar 2025
 conf t
-host SW8
+host MLS_Szeged_Vezet
 ena sec cisco123
 no ip domain-l
 bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
@@ -349,19 +379,19 @@ ip address 172.16.2.2 255.255.255.128
 ip helper-address 172.16.2.1
 no sh
 
-interface G1/0/4
+interface range G1/0/1, G1/0/4
 switchport mode trunk
 switchport trunk allowed vlan 341,342,343,999,1000
 exit
 
 ------------------------------------
 
-SW5
+MLS_Szeged_Vez_Vlan343
 
 ena
 clock set 12:00:00 03 mar 2025
 conf t
-host SW5
+host MLS_Szeged_Vez_Vlan343
 ena sec cisco123
 no ip domain-l
 bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
@@ -401,12 +431,12 @@ switchport access vlan 343
 
 ------------------------------------
 
-SW6
+MLS_Szeged_Adminisztr_Vlan342
 
 ena
 clock set 12:00:00 03 mar 2025
 conf t
-host SW6
+host MLS_Szeged_Adminisztr_Vlan342
 ena sec cisco123
 no ip domain-l
 bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
@@ -446,12 +476,12 @@ switchport access vlan 342
 
 ------------------------------------
 
-SW7
+MLS_Szeged_admin_Vlan341
 
 ena
 clock set 12:00:00 03 mar 2025
 conf t
-host SW7
+host MLS_Szeged_admin_Vlan341
 ena sec cisco123
 no ip domain-l
 bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
