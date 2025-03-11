@@ -239,6 +239,15 @@ description Native
 no sh
 exit
 
+interface G0/0/1
+standby version 2
+standby 999 ip 172.16.2.1
+standby 999 priority 110
+standby 999 preempt
+description HSRP Adminisztracio fele
+no sh
+exit
+
 router eigrp 10 
 eigrp router-id 3.3.3.3
 network 172.16.2.0 0.0.0.127
@@ -314,6 +323,15 @@ interface g0/0/0.341
 encapsulation dot1Q 341
 ip address 172.16.81.1 255.255.255.128
 description VLAN 341 fele
+no sh
+exit
+
+interface G0/0/1
+standby version 2
+standby 999 ip 172.16.2.2
+standby 999 priority 90
+standby 999 preempt
+description HSRP Vezetoseg fele
 no sh
 exit
 
@@ -523,3 +541,10 @@ exit
 interface range G1/0/20-G1/0/24
 switchport mode access
 switchport access vlan 341
+
+
+-------------------------
+WLC
+
+username admin
+password Cisco123.
