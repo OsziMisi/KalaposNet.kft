@@ -221,7 +221,6 @@ no sh
 exit
 
 interface g0/0/0
-ip address 172.16.2.1 255.255.255.128
 description MLS_Szeged_Vezet fele
 no sh
 exit
@@ -243,8 +242,6 @@ exit
 router eigrp 10 
 eigrp router-id 3.3.3.3
 network 172.16.2.0 0.0.0.127
-network 172.16.83.0 0.0.0.127
-network 172.16.89.0 0.0.0.127
 network 30.30.80.0 0.0.0.3
 no auto-summary
 redistribute ospf 10 metric
@@ -302,7 +299,6 @@ no sh
 exit
 
 interface g0/0/0
-ip address 172.16.3.1 255.255.255.128
 description MLS_Szeged_admin_Vlan341 fele
 no sh
 exit
@@ -324,8 +320,6 @@ exit
 router ospf 10
 router-id 3.3.3.3
 network 172.16.3.0 0.0.0.127 area 0
-network 172.16.82.0 0.0.0.127 area 0
-network 172.16.81.0 0.0.0.127 area 0
 network 30.30.90.0 0.0.0.3 area 0
 redistribute eigrp 10 metric-type 1 subnets
 passive-interface G0/0/0
@@ -377,17 +371,9 @@ name Native
 vlan 1000
 name NemHasznalt
 
-ip default-gateway 172.16.2.1
+ip default-gateway 172.16.89.1
 
-interface G1/1/1
-no switchport
-ip address 172.16.2.2 255.255.255.128
-ip helper-address 172.16.2.1
-description R_Szeged_Vezetoseg
-no sh
-exit
-
-interface range G1/0/1, G1/0/4
+interface range G1/0/1, G1/0/4, G1/1/1
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999,1000
