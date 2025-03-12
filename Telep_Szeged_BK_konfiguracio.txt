@@ -53,7 +53,7 @@ redistribute ospf 10 metric 10000 100 255 1 1500
 exit
 
 router ospf 10
-router-id 1.1.1.1
+router-id 2.2.2.2
 network 30.30.10.0 0.0.0.3 area 0
 network 30.30.30.0 0.0.0.3 area 0
 network 30.30.70.0 0.0.0.3 area 0
@@ -110,7 +110,7 @@ no sh
 exit
 
 router ospf 10
-router-id 2.2.2.2
+router-id 3.3.3.3
 network 30.30.70.0 0.0.0.3 area 0
 network 30.30.90.0 0.0.0.3 area 0
 redistribute eigrp 10 subnets
@@ -164,7 +164,7 @@ no sh
 exit
 
 router eigrp 10 
-eigrp router-id 2.2.2.2
+eigrp router-id 4.4.4.4
 network 30.30.80.0 0.0.0.3
 no auto-summary 
 redistribute ospf 10 metric 10000 100 255 1 1500
@@ -240,8 +240,8 @@ no sh
 exit
 
 interface G0/0/1
-standby version 2
-standby 999 ip 172.16.2.1
+ip address 172.16.2.1 255.255.255.128
+standby 999 ip 172.16.2.10
 standby 999 priority 110
 standby 999 preempt
 description HSRP Adminisztracio fele
@@ -249,11 +249,11 @@ no sh
 exit
 
 router eigrp 10 
-eigrp router-id 3.3.3.3
+eigrp router-id 5.5.5.5
 network 172.16.2.0 0.0.0.127
 network 30.30.80.0 0.0.0.3
-no auto-summary
-redistribute ospf 10 metric
+
+redistribute ospf 10 metric 10000 100 255 1 1500
 passive-interface G0/0/0
 exit
 
@@ -327,8 +327,8 @@ no sh
 exit
 
 interface G0/0/1
-standby version 2
-standby 999 ip 172.16.2.2
+ip address 172.16.2.2 255.255.255.128
+standby 999 ip 172.16.2.10
 standby 999 priority 90
 standby 999 preempt
 description HSRP Vezetoseg fele
@@ -336,10 +336,11 @@ no sh
 exit
 
 router ospf 10
-router-id 3.3.3.3
-network 172.16.3.0 0.0.0.127 area 0
+router-id 6.6.6.6
+network 172.16.2.0 0.0.0.127 area 0
+network 30.30.70.0 0.0.0.3 area 0
 network 30.30.90.0 0.0.0.3 area 0
-redistribute eigrp 10 metric-type 1 subnets
+redistribute eigrp 10 metric 30 metric-type 1 subnets
 passive-interface G0/0/0
 exit
 
