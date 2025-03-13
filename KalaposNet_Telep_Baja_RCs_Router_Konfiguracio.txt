@@ -41,29 +41,6 @@ no shutdown
 ip add 172.16.1.1 255.255.255.128
 des Switch_Baja_Egy fele
 
-int g0/0/1.341
-enc dot 341
-ip add 172.16.41.1 255.255.255.128
-des vlan 341 atjaroja
-ip helper-address 172.16.49.2
-
-int g0/0/1.342
-enc dot 342
-ip add 172.16.42.1 255.255.255.128
-des vlan 342 atjaroja
-ip helper-address 172.16.49.2
-
-int g0/0/1.343
-enc dot 343
-ip add 172.16.43.1 255.255.255.128
-des vlan 343 atjaroja
-ip helper-address 172.16.49.2
-
-int g0/0/1.999
-enc dot 999 native
-ip add 172.16.49.1 255.255.255.128
-des vlan 999 atjaroja
-
 int g0/0/0
 ip add 30.30.50.1 255.255.255.252
 no shutdown
@@ -73,8 +50,6 @@ int s0/1/0
 ip add 30.30.40.2 255.255.255.252
 no shutdown
 des ISP_Baja fele
-
-ip route 30.30.50.0 255.255.255.252 g0/0/1 150
 
 ========================================================================
 
@@ -162,8 +137,6 @@ ip add 30.30.60.2 255.255.255.252
 no shutdown
 des Home_Router fele
 
-ip route 30.30.50.0 255.255.255.252 g0/0/1 150
-
 
 ========================================================================
 
@@ -243,6 +216,7 @@ eigrp router-id 8.8.8.8
 network 30.30.40.0 0.0.0.3
 network 30.30.50.0 0.0.0.3
 network 172.16.1.0 0.0.0.127
+passive-interface g0/0/1
 no auto-summary
 
 Baja_VPN
