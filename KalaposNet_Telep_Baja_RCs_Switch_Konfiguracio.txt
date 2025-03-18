@@ -49,7 +49,7 @@ interface po1
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
-des Switch_Baja_Ketto fele
+des SW_Baja_Vezetoseg fele
 
 int range g1/0/7, g1/0/8
 no shutdown
@@ -58,7 +58,7 @@ interface po4
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
-des Switch_Baja_Negy fele
+des SW_Baja_Adminisztracio_Ketto fele
 
 
 int range g1/0/9, g1/0/10
@@ -68,7 +68,7 @@ interface po5
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
-des Switch_Baja_Ot fele
+des SW_Baja_Rendszergazda fele
 exit
 
 int range g1/0/4, g1/0/5, g1/0/6, g1/0/11, g1/0/12, g1/0/13, g1/0/14, g1/0/15, g1/0/16, g1/0/17, g1/0/18, g1/0/19, g1/0/20, g1/0/21, g1/0/22, g1/0/23, g1/0/24, g1/1/2, g1/1/3, g1/1/4
@@ -135,7 +135,7 @@ interface po1
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
-des Switch_Baja_Egy fele
+des Switch_Baja_Kozpont fele
 
 int range g1/0/3, g1/0/4
 no shutdown
@@ -144,7 +144,7 @@ interface po2
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
-des Switch_Baja_Harom fele
+des Switch_Baja_Adminisztracio_Egy fele
 
 int range g1/0/5, g1/0/6, g1/0/7, g1/0/8, g1/0/9, g1/0/10, g1/0/11, g1/0/12, g1/0/13, g1/0/14, g1/0/15, g1/0/16, g1/0/17, g1/0/18, g1/0/19, g1/0/20, g1/1/1, g1/1/2, g1/1/3, g1/1/4
 switchport mode access
@@ -192,7 +192,7 @@ interface po2
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
-des Switch_Baja_Ketto fele
+des Switch_Baja_Vezetoseg fele
 
 int range g1/0/5, g1/0/6
 no shutdown
@@ -201,7 +201,7 @@ interface po3
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
-des Switch_Baja_Negy fele
+des Switch_Baja_Adminisztracio_Ketto fele
 
 int range g1/0/1, g1/0/2, g1/0/7, g1/0/8, g1/0/9, g1/0/10, g1/0/11, g1/0/12, g1/0/13, g1/0/14, g1/0/15, g1/0/16, g1/0/17, g1/0/18, g1/0/19, g1/0/20, g1/0/21, g1/1/1, g1/1/2, g1/1/3, g1/1/4
 switchport mode access
@@ -249,7 +249,7 @@ interface po3
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
-des Switch_Baja_Negy fele
+des Switch_Baja_Adminisztracio_Egy fele
 
 int range g1/0/7, g1/0/8
 no shutdown
@@ -258,7 +258,7 @@ interface po4
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
-des Switch_Baja_Negy fele
+des Switch_Baja_Kozpont fele
 
 int range g1/0/1, g1/0/2, g1/0/3, g1/0/4, g1/0/9, g1/0/10, g1/0/11, g1/0/12, g1/0/13, g1/0/14, g1/0/15, g1/0/16, g1/0/17, g1/0/18, g1/0/19, g1/0/20, g1/0/21, g1/1/1, g1/1/2, g1/1/3, g1/1/4
 switchport mode access
@@ -305,7 +305,7 @@ interface po5
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999
-des Switch_Baja_Egy fele
+des Switch_Baja_Kozpont fele
 exit
 
 int range g1/0/1, g1/0/2, g1/0/3, g1/0/4, g1/0/5, g1/0/6, g1/0/7, g1/0/8, g1/0/11, g1/0/12, g1/0/13, g1/0/14, g1/0/15, g1/0/16, g1/0/17, g1/0/18, g1/0/19, g1/0/20, g1/0/21, g1/0/22, g1/0/23, g1/0/24, g1/1/4
