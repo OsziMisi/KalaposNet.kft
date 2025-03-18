@@ -50,19 +50,19 @@ int g0/0/1.341
 enc dot 341
 ip add 172.16.41.1 255.255.255.128
 des vlan 341 atjaroja
-ip helper-address 172.16.49.2
+ip helper-address 172.16.41.20
  
 int g0/0/1.342
 enc dot 342
 ip add 172.16.42.1 255.255.255.128
 des vlan 342 atjaroja
-ip helper-address 172.16.49.2
+ip helper-address 172.16.41.20
  
 int g0/0/1.343
 enc dot 343
 ip add 172.16.43.1 255.255.255.128
 des vlan 343 atjaroja
-ip helper-address 172.16.49.2
+ip helper-address 172.16.41.20
  
 int g0/0/1.999
 enc dot 999 native
