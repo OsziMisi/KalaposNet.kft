@@ -242,6 +242,10 @@ eigrp router-id 8.8.8.8
 network 30.30.40.0 0.0.0.3
 network 30.30.50.0 0.0.0.3
 network 172.16.1.0 0.0.0.127
+network 172.16.41.0 0.0.0.127
+network 172.16.42.0 0.0.0.127
+network 172.16.43.0 0.0.0.127
+network 172.16.49.0 0.0.0.127
 passive-interface g0/0/1
 no auto-summary
 
