@@ -326,6 +326,13 @@ description VLAN 341 fele
 no sh
 exit
 
+interface g0/0/0.999
+encapsulation dot1Q 999 native
+ip address 172.16.89.2 255.255.255.128
+description Native
+no sh
+exit
+
 interface G0/0/1
 ip address 172.16.2.2 255.255.255.128
 standby 999 ip 172.16.2.10
@@ -339,6 +346,7 @@ router ospf 10
 router-id 6.6.6.6
 network 172.16.2.0 0.0.0.127 area 0
 network 30.30.90.0 0.0.0.3 area 0
+network 172.16.89.0 0.0.0.127 area 0
 redistribute eigrp 10 metric 30 metric-type 1 subnets
 passive-interface G0/0/0
 exit
@@ -485,7 +493,7 @@ switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999,1000
 exit
 
-interface range G1/0/21-G1/0/24
+interface range G1/0/20-G1/0/24
 switchport mode access
 switchport access vlan 342
 
