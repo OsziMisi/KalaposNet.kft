@@ -158,7 +158,7 @@ no shutdown
 des Telep_Baja fele
 
 int g0/0/0
-ip add 30.30.60.2 255.255.255.252
+ip add 30.30.60.1 255.255.255.252
 no shutdown
 des Home_Router fele
 
@@ -248,6 +248,7 @@ network 172.16.43.0 0.0.0.127
 network 172.16.49.0 0.0.0.127
 passive-interface g0/0/1
 no auto-summary
+redistribute static
 
 Baja_VPN
 
@@ -257,3 +258,5 @@ network 30.30.50.0 0.0.0.3
 network 30.30.60.0 0.0.0.3
 network 192.168.100.0 0.0.0.255
 no auto-summary
+pass g0/0/0
+redistribute static
