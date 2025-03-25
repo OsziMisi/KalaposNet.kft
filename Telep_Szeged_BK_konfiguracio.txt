@@ -49,7 +49,6 @@ network 30.30.10.0 0.0.0.3
 network 30.30.30.0 0.0.0.3
 network 30.30.70.0 0.0.0.3
 no auto-summary 
-redistribute ospf 10 metric 10000 100 255 1 1500
 exit
 
 router ospf 10
@@ -57,7 +56,6 @@ router-id 2.2.2.2
 network 30.30.10.0 0.0.0.3 area 0
 network 30.30.30.0 0.0.0.3 area 0
 network 30.30.70.0 0.0.0.3 area 0
-redistribute eigrp 10 subnets
 exit
 
 ip domain-name cisco.com
@@ -113,7 +111,6 @@ router ospf 10
 router-id 3.3.3.3
 network 30.30.70.0 0.0.0.3 area 0
 network 30.30.90.0 0.0.0.3 area 0
-redistribute eigrp 10 subnets
 exit
 
 ip domain-name cisco.com
@@ -167,7 +164,6 @@ router eigrp 10
 eigrp router-id 4.4.4.4
 network 30.30.80.0 0.0.0.3
 no auto-summary 
-redistribute ospf 10 metric 10000 100 255 1 1500
 exit
 
 ip domain-name cisco.com
@@ -240,21 +236,93 @@ no sh
 exit
 
 interface G0/0/1
-ip address 172.16.2.1 255.255.255.128
-standby 999 ip 172.16.2.10
+ip address 172.16.2.2 255.255.255.248
+standby version 2
+standby 999 ip 172.16.2.1
 standby 999 priority 110
 standby 999 preempt
-description HSRP Adminisztracio fele
+description R_Szeged_HSRP_Vezerlo fele
 no sh
 exit
 
 router eigrp 10 
 eigrp router-id 5.5.5.5
-network 172.16.2.0 0.0.0.127
 network 30.30.80.0 0.0.0.3
-redistribute ospf 10 metric 10000 100 255 1 1500
+network 172.16.2.0 0.0.0.7
+network 172.16.83.0 0.0.0.127
+network 172.16.89.0 0.0.0.127
 passive-interface G0/0/0
 no auto-summary
+exit
+
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+username rg secret cisco123
+ip ssh version 2
+line vty 0 15
+login local
+transport input ssh
+exit
+
+------------------------------------
+R_Szeged_HSRP_Vezerlo
+
+ena
+clock set 12:00:00 03 mar 2025
+conf t
+host R_Szeged_HSRP_Vezerlo
+ena sec class123
+no ip domain-l
+bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+login block-for 60 attempts 2 within 30
+security passwords min-length 8
+
+lin con 0
+pass cisco123
+login
+logg syn
+exec 5
+line vty 0 15
+pass cisco123
+login
+exec 5
+exit
+ser pass
+
+interface G0/0/1
+ip address 172.16.2.3 255.255.255.248
+standby version 2
+standby 999 ip 172.16.2.1
+standby 999 priority 120
+standby 999 preempt
+description HSRP Adminisztracio fele
+no sh
+exit
+
+interface G0/0/0
+ip address 172.16.2.9 255.255.255.248
+standby version 2
+standby 999 ip 172.16.2.1
+standby 999 priority 120
+standby 999 preempt
+description R_Szeged_Vezetoseg fele
+no sh
+exit
+
+router eigrp 10
+eigrp router-id 8.8.8.8
+no auto-summary
+network 172.16.2.0 0.0.0.7
+network 172.16.2.8 0.0.0.7
+redistribute ospf 10 metric 100000 100 255 1 1500
+exit
+
+router ospf 10
+router-id 7.7.7.7
+network 172.16.2.0 0.0.0.7 area 0
+network 172.16.2.8 0.0.0.7 area 0
+redistribute eigrp 10 subnets
 exit
 
 ip domain-name cisco.com
@@ -334,20 +402,20 @@ no sh
 exit
 
 interface G0/0/1
-ip address 172.16.2.2 255.255.255.128
-standby 999 ip 172.16.2.10
-standby 999 priority 90
+ip address 172.16.2.10 255.255.255.248
+standby version 2
+standby 999 ip 172.16.2.1
+standby 999 priority 120
 standby 999 preempt
-description HSRP Vezetoseg fele
+description R_Szeged_HSRP_Vezerlo fele
 no sh
 exit
 
 router ospf 10
 router-id 6.6.6.6
-network 172.16.2.0 0.0.0.127 area 0
+network 172.16.2.8 0.0.0.7 area 0
 network 30.30.90.0 0.0.0.3 area 0
 network 172.16.89.0 0.0.0.127 area 0
-redistribute eigrp 10 metric 30 metric-type 1 subnets
 passive-interface G0/0/0
 exit
 
