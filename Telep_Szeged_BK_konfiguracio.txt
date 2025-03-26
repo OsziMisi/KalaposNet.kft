@@ -209,6 +209,13 @@ network 172.16.83.0 255.255.255.128
 default-router 172.16.83.1
 dns-server 8.8.8.8
 
+ip dhcp excluded-address 172.16.89.1 172.16.89.10
+ip dhcp excluded-address 172.16.89.151 172.16.89.254
+ip dhcp pool Native_Vezetoseg
+network 172.16.89.0 255.255.255.128
+default-router 172.16.89.1
+dns-server 8.8.8.8
+
 interface Serial0/1/1
 clock rate 4000000
 ip address 30.30.80.2 255.255.255.252
@@ -415,6 +422,7 @@ router ospf 10
 router-id 6.6.6.6
 network 172.16.2.8 0.0.0.7 area 0
 network 30.30.90.0 0.0.0.3 area 0
+network 172.16.82.0 0.0.0.127 area 0
 network 172.16.89.0 0.0.0.127 area 0
 passive-interface G0/0/0
 exit
@@ -473,6 +481,10 @@ switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999,1000
 exit
 
+interface range G1/0/2-3, G1/0/5-24, G1/1/2-4
+shutdown
+exit
+
 ------------------------------------
 
 MLS_Szeged_Vez_Vlan343
@@ -519,6 +531,10 @@ interface range G1/0/21-G1/0/24
 switchport mode access
 switchport access vlan 343
 
+interface range G1/0/3-20, G1/1/1-4
+shutdown
+exit
+
 ------------------------------------
 
 MLS_Szeged_Adminisztr_Vlan342
@@ -555,7 +571,7 @@ name Native
 vlan 1000
 name NemHasznalt
 
-interface range G1/0/2, G1/0/3, G1/1/1
+interface range G1/0/2, G1/0/3-5 , G1/1/1
 switchport mode trunk
 switchport trunk native vlan 999
 switchport trunk allowed vlan 341,342,343,999,1000
@@ -564,6 +580,10 @@ exit
 interface range G1/0/20-G1/0/24
 switchport mode access
 switchport access vlan 342
+
+interface range G1/0/6-19, G1/1/2-4
+shutdown
+exit
 
 ------------------------------------
 
@@ -612,6 +632,9 @@ interface G1/0/24
 switchport mode access
 switchport access vlan 341
 
+interface range G1/0/5-19, G1/1/2-4
+shutdown
+exit
 
 -------------------------
 WLC
