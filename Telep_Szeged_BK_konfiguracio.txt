@@ -387,6 +387,10 @@ description MLS_Szeged_admin_Vlan341 fele
 no sh
 exit
 
+interface range G0/0/2, G0/2/0-3
+shutdown
+exit
+
 interface g0/0/0.342
 encapsulation dot1Q 342
 ip address 172.16.82.1 255.255.255.128
