@@ -41,8 +41,9 @@ no shutdown
 ip add 172.16.1.1 255.255.255.128
 des Switch_Baja_Egy fele
 
-int g0/0/0
+int s0/1/1
 ip add 30.30.50.1 255.255.255.252
+clock rate 400000
 no shutdown
 des Baja_VPN fele
 
@@ -74,7 +75,7 @@ ip add 30.30.40.2 255.255.255.252
 no shutdown
 des ISP_Baja fele
 
-ip route 30.30.50.0 255.255.255.252 g0/0/1 150
+ip route 30.30.50.0 255.255.255.252 s0/1/1 150
 
 ========================================================================
 
@@ -152,8 +153,8 @@ line vty 0 15
 login local
 transport input ssh
 
-int g0/0/1
-ip add 30.30.50.1 255.255.255.252
+int s0/1/0
+ip add 30.30.50.2 255.255.255.252
 no shutdown
 des Telep_Baja fele
 
@@ -162,7 +163,7 @@ ip add 30.30.60.1 255.255.255.252
 no shutdown
 des Home_Router fele
 
-ip route 30.30.50.0 255.255.255.252 g0/0/1 150
+ip route 30.30.50.0 255.255.255.252 s0/1/0 150
 
 ========================================================================
 
@@ -272,12 +273,14 @@ Baja_VPN
 
 interface tunnel 0
 ip add 22.33.44.2 255.255.255.252
-tunnel source g0/0/1
+tunnel source g0/0/0
 tunnel destination 30.30.40.1 
+tunnel mode gre ip
 
 ISP_Baja
 
 interface tunnel 0
-ip add 22.33.44.2 255.255.255.252
+ip add 22.33.44.1 255.255.255.252
 tunnel source s0/1/0
 tunnel destination 30.30.50.2 
+tunnel mode gre ip
