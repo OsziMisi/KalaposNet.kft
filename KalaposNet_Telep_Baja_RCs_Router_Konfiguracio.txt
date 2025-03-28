@@ -294,7 +294,7 @@ crypto map mymap
 
 interface tunnel 0
 ip add 22.33.44.2 255.255.255.252
-tunnel source g0/0/0
+tunnel source s0/1/0
 tunnel destination 30.30.40.1 
 tunnel mode gre ip
 
