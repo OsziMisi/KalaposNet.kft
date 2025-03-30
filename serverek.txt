@@ -1,0 +1,128 @@
+sudo nano /etc/netplan/50-cloud-init.yaml 
+
+2)
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3:
+      dhcp4: true
+    enp0s8:
+      dhcp4: no
+      addresses:
+        - 172.16.7.10/25
+      routes:
+        - to: default
+          via: 172.16.7.1
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 8.8.4.4
+3)
+sudo netplan apply
+
+
+4) SYS LOG
+sudo apt install rsyslog -y
+
+5)tavoli fogadas:
+sudo systemctl enable --now rsyslog
+
+sys config:
+###########################
+#### GLOBAL DIRECTIVES ####
+###########################
+
+#
+# Use traditional timestamp format.
+# To enable high precision timestamps, comment out the following line.
+#
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+
+# Filter duplicated messages
+$RepeatedMsgReduction on
+
+#
+# Set the default permissions for all log files.
+#
+$FileOwner syslog
+$FileGroup adm
+$FileCreateMode 0640
+$DirCreateMode 0755
+$Umask 0022
+$PrivDropToUser syslog
+$PrivDropToGroup syslog
+
+#
+# Where to place spool and state files
+#
+$WorkDirectory /var/spool/rsyslog
+
+#
+# Include all config files in /etc/rsyslog.d/
+#
+$IncludeConfig /etc/rsyslog.d/*.conf
+
+#
+# Enable UDP and TCP syslog reception
+#
+$ModLoad imudp
+$UDPServerRun 514
+$ModLoad imtcp
+$InputTCPServerRun 514
+
+#
+# Define a template to store incoming logs in separate directories
+#
+$template RemoteLogs,"/var/log/remote/%HOSTNAME%/%PROGRAMNAME%.log"
+*.* ?RemoteLogs
+
+6)
+egy ujrainditas es ellenorzes
+sudo systemctl restart rsyslog
+sudo systemctl status rsyslog
+
+
+7)
+tuzfal engedelyezese
+sudo ufw allow 514/udp
+sudo ufw allow 514/tcp
+
+
+
+8)
+dhcp
+
+sudo apt install isc-dhcp-server -y
+sudo nano /etc/default/isc-dhcp-server
+
+
+9)
+INTERFACESv4="enp0s8"
+
+option domain-name "local";
+option domain-name-servers 8.8.8.8, 8.8.4.4;
+
+# IP címkiosztási tartomány
+subnet 172.16.6.0 netmask 255.255.255.128 {
+  range 172.16.6.30 172.16.6.100;  # Az IP tartomány a /25 maszk szerint
+  option routers 172.16.6.10;      # A default gateway (az Ubuntu szerver IP-je)
+  option subnet-mask 255.255.255.128;
+  option broadcast-address 172.16.6.127;
+}
+
+# A szerver IP-címe
+authoritative;
+
+
+10Ö)
+sudo systemctl restart isc-dhcp-server
+sudo systemctl status isc-dhcp-server
+
+
+11)
+grep "DHCPACK" /var/log/syslog
+tail -f /var/log/syslog | grep dhcpd
+
+
+grep "lease" /var/lib/dhcp/dhcpd.leases | awk '{print $2}' | sort -u
