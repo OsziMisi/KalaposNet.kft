@@ -253,6 +253,11 @@ vtp mode server
 vtp password cisco123
 
 
+ip default-gateway 192.168.123.10
+ip default-gateway 192.168.122.10
+ip default-gateway 192.168.121.10
+ip default-gateway 192.168.129.10
+
 
 
 
