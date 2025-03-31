@@ -94,6 +94,13 @@ exec 5
 exit
 ser pass
 
+interface S0/1/0
+clock rate 4000000
+ip address 30.30.90.5 255.255.255.252
+description R_Szeged_Vezetoseg fele
+no shutdown
+exit
+
 interface Serial0/2/1
 ip address 30.30.70.2 255.255.255.252
 description TELEKOM(WAN) fele
@@ -111,6 +118,7 @@ router ospf 10
 router-id 3.3.3.3
 network 30.30.70.0 0.0.0.3 area 0
 network 30.30.90.0 0.0.0.3 area 0
+network 30.30.90.4 0.0.0.3 area 0
 exit
 
 ip domain-name cisco.com
@@ -149,6 +157,12 @@ login
 exec 5
 exit
 ser pass
+
+interface s0/1/0
+ip address 30.30.80.5 255.255.255.252
+description R_Szeged_Adminisztracio fele
+no sh
+exit
 
 interface Serial0/1/1
 ip address 30.30.80.1 255.255.255.252
