@@ -184,7 +184,7 @@ router eigrp 10
 eigrp router-id 4.4.4.4
 network 30.30.80.0 0.0.0.3
 network 30.30.80.4 0.0.0.3
-no auto-summary
+no auto
 exit
 
 
@@ -287,7 +287,7 @@ network 172.16.2.0 0.0.0.7
 network 172.16.83.0 0.0.0.127
 network 172.16.89.0 0.0.0.127
 passive-interface G0/0/0
-no auto-summary
+no auto
 redistribute ospf 10 metric 100000 100 255 1 1500
 exit
 
@@ -403,7 +403,7 @@ exit
 router eigrp 10
 eigrp router-id 6.6.6.7
 network 30.30.80.4 0.0.0.3
-no auto-summary
+no auto
 redistribute ospf 10 metric 100000 100 255 1 1500
 exit
 
