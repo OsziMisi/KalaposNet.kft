@@ -126,3 +126,22 @@ tail -f /var/log/syslog | grep dhcpd
 
 
 grep "lease" /var/lib/dhcp/dhcpd.leases | awk '{print $2}' | sort -u
+
+
+
+
+WINDOWS-------------------------
+
+
+-AD telepitve
+-Szervezeti egyseg(Adminisztracio,RG, Vezetoseg)
+-DNS szolgaltatas(A record, CNAME)
+-http webeleres
+-Megosztas(vezetose, titkarsag)
+
+
+
+
+
+
+
