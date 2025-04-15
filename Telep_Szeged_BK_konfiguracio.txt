@@ -621,6 +621,12 @@ WLC
 username admin
 password Cisco123.
 
+WLAN 1 -> Vezetoseg343
+IP : 172.16.83.129 /25 (DHCP Scope)
+Range : 172.16.83.130-172.16.83.150
+SSID Vezetoseg
+password Vezetoseg343.
+
 WLAN 10 -> Adminisztracio342
 SSID Adminisztracio
-password Adminisztracio342
+password Adminisztracio342.
