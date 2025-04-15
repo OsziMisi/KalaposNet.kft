@@ -330,3 +330,18 @@ tunnel destination 30.30.50.2
 tunnel mode gre ip
 
 ip route 192.168.100.0 255.255.255.0 22.33.44.2
+
+========================================================================
+
+DINAMIKUS NAT
+
+========================================================================
+
+TELEP_BAJA
+
+ip nat pool NAT_Pool 209.49.69.38 209.49.69.50 netmask 255.255.255.0
+access-list 1 permit 192.168.100.0 255.255.255.0
+int s0/1/1
+ip nat outside
+int s0/1/0
+ip nat inside
