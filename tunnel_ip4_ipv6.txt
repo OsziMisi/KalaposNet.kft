@@ -1,0 +1,122 @@
+----------------------- IPV4 ----------------
+
+1.Telep Baja
+    -Serial0/1/0(30.30.40.2/30)
+    -Serial0/1/1(30.30.50.1/30)
+
+2.ISP Baja
+    -Serial0/1/0(30.30.40.1/30)
+    -Serial0/1/1(30.30.10.1/30)
+
+3.Baja VPN
+    -Serial0/1/0(30.30.50.1/30)
+    
+4.Yettel Szeged
+    -Serial0/2/0(30.30.10.2/30)
+    -Serial0/1/1(30.30.80.1/30)
+    -Serial0/1/0(30.30.100.1/30)
+
+
+5.R_Szeged_Vezetőség
+    -Serial0/1/1(30.30.80.2/30)
+    -Serial0/1/0(30.30.110.2/30)
+
+6.R_Szeged_Adminisztráció
+    -Serial0/1/0(30.30.100.2/30)
+    -Serial0/1/1(30.30.90.2/30)
+
+7. WAN BOSS
+    -Serial0/2/1(30.30.70.1/30)
+
+8. Telekom Sezeged
+    -Serial0/2/1(30.30.70.2/30)
+    -Serial0/1/0(30.30.110.1/30)
+    -Serial0/1/1(30.30.90.1/30)
+    -Serial0/2/0(30.30.120.1/30)
+
+9. ISP telekom
+    -Serial0/2/1(30.30.120.2/30)
+    -Serial0/2/0(30.30.30.1/30)
+
+10. ISP Pest
+    -Serial0/2/0(30.30.30.2/30)
+    -Serial0/1/0(30.30.130.1/30)
+    -Serial0/2/1(30.30.100.1/30)
+
+
+11. Telep Pest
+    -Serial0/2/1(30.30.100.2/30)
+
+12. Telep Buda
+    -Serial0/2/1(30.30.130.1/30)
+
+----------------------- IPV6 ----------
+
+1.--Telep Baja--
+    ×Serial0/1/0: 2001:db8:abcd:0001::1/64
+    ×Serial0/1/1: 2001:db8:abcd:0002::2/64
+
+2.ISP Baja
+    ×Serial0/1/0: 2001:db8:abcd:0003::1/64
+    ×Serial0/1/1: 2001:db8:abcd:0004::2/64
+
+3.---Baja VPN--
+    ×Serial0/1/0: 2001:db8:abcd:0005::1/64
+
+4.--Yettel Szeged--
+    ×Serial0/2/0: 2001:db8:abcd:0006::1/64
+    ×Serial0/1/1: 2001:db8:abcd:0007::2/64
+    ×Serial0/1/0: 2001:db8:abcd:0008::3/64
+
+5.--R_Szeged_Vezetőség--
+    ×Serial0/1/1: 2001:db8:abcd:0009::1/64
+    ×Serial0/1/0: 2001:db8:abcd:0010::2/64
+
+6.--R_Szeged_Adminisztráció--
+    ×Serial0/1/0: 2001:db8:abcd:0011::1/64
+    ×Serial0/1/1: 2001:db8:abcd:0012::2/64
+
+7.--WAN--
+    ×Serial0/2/1: 2001:db8:abcd:0013::1/64
+
+8--Telekom Sezeged--
+    ×Serial0/2/1: 2001:db8:abcd:0014::1/64
+    ×Serial0/1/0: 2001:db8:abcd:0015::2/64
+    ×Serial0/1/1: 2001:db8:abcd:0016::3/64
+    ×Serial0/2/0: 2001:db8:abcd:0017::4/64
+
+9.--ISP telekom--
+    ×Serial0/2/1: 2001:db8:abcd:0018::1/64
+    ×Serial0/2/0: 2001:db8:abcd:0019::2/64
+    ipv6 uni
+
+    int S0/2/1
+    ipv6 address 2001:db8:abcd:0018::1/64
+    no sh
+
+    int S0/1/0
+    ipv6 address 2001:db8:abcd:0019::2/64
+    no sh
+    exit
+
+    ipv6 router ospf 6
+    router-id 1.1.1.1
+    exit
+
+
+    interface Serial0/2/1
+    ipv6 ospf 6 area 0
+    interface Serial0/2/0
+    ipv6 ospf 6 area 0
+
+10.--ISP Pest--
+
+    ×Serial0/2/0: 2001:db8:abcd:0020::1/64
+    ×Serial0/1/0: 2001:db8:abcd:0021::2/64
+    ×Serial0/2/1: 2001:db8:abcd:0022::3/64
+
+11.--Telep Pest--
+    ×Serial0/2/1: 2001:db8:abcd:0023::1/64
+
+12.--Telep Buda--
+    ×Serial0/2/1: 2001:db8:abcd:0024::1/64
