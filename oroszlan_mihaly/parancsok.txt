@@ -1,4 +1,4 @@
----ISP_BOSS------------------------------
+---WAN------------------------------
 
 (portvedelem)
 int r G0/0/0-2
@@ -103,6 +103,56 @@ network 30.30.100.0 000.000.000.003 area 0
 network 30.30.110.0 000.000.000.003 area 0
 network 172.16.11.0 000.000.000.127 area 0
 
+×IPV6×
+ßßß
+
+ipv6 uni
+
+int S0/2/1
+ipv6 address 2001:db8:abcd:0018::1/64
+no sh
+
+int S0/1/0
+ipv6 address 2001:db8:abcd:0019::2/64
+no sh
+exit
+
+ipv6 router ospf 6
+router-id 1.1.1.1
+exit
+
+
+interface Serial0/2/1
+ipv6 ospf 6 area 0
+interface Serial0/2/0
+ipv6 ospf 6 area 0
+
+ßßß
+ipv6 uni
+
+int S0/2/1
+ipv6 address 2001:db8:abcd:0022::3/64
+no sh
+
+int S0/1/0
+ipv6 address 2001:db8:abcd:0021::2/64
+no sh
+
+int S0/2/0
+ipv6 address 2001:db8:abcd:0020::1/64
+no sh
+exit
+
+ipv6 router ospf 6
+router-id 5.5.5.5
+
+interface Serial0/2/1
+ipv6 ospf 6 area 0
+interface Serial0/1/0
+ipv6 ospf 6 area 0
+interface Serial0/2/0
+ipv6 ospf 6 area 0
+
 
 ---Telep Buda---------------------------------
 
@@ -175,6 +225,22 @@ int GigabitEthernet 0/0/0.999
 encapsulation dot1Q 999 native
 ip add 172.16.129.1 255.255.255.128
 exit
+
+×IPV6×
+
+ipv6 uni
+
+int S0/2/1
+ipv6 address 2001:db8:abcd:0024::1/64
+no sh
+ex
+
+ipv6 router ospf 6
+router-id 6.6.6.6
+
+interface Serial0/2/1
+ipv6 ospf 6 area 0
+
 
 ---SW12---------------------------------
 
@@ -638,6 +704,20 @@ sh
 
 int S0/2/0
 sh
+
+×IPV6×
+
+ipv6 uni
+
+int S0/2/1
+ipv6 address 2001:db8:abcd:0023::1/64
+no sh
+
+ipv6 router ospf 6
+router-id 6.6.6.6
+
+interface Serial0/2/1
+ipv6 ospf 6 area 0
 
 
 ---Tűzfal---
