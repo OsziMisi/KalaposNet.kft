@@ -4,6 +4,7 @@
     -Serial0/1/0(30.30.40.2/30)
     -Serial0/1/1(30.30.50.1/30)
 
+
 2.ISP Baja
     -Serial0/1/0(30.30.40.1/30)
     -Serial0/1/1(30.30.10.1/30)
@@ -55,13 +56,40 @@
 1.--Telep Baja--
     ×Serial0/1/0: 2001:db8:abcd:0001::1/64
     ×Serial0/1/1: 2001:db8:abcd:0002::2/64
+	 ipv6 router ospf 6
+     router-id 8.8.8.8
+     exit
+
+
+     interface Serial0/1/1
+     ipv6 ospf 6 area 0
+     interface Serial0/1/0
+     ipv6 ospf 6 area 0
 
 2.ISP Baja
     ×Serial0/1/0: 2001:db8:abcd:0003::1/64
     ×Serial0/1/1: 2001:db8:abcd:0004::2/64
+    ipv6 router ospf 6
+    router-id 7.7.7.7
+    exit
+
+
+    interface Serial0/1/1
+    ipv6 ospf 6 area 0
+    interface Serial0/1/0
+    ipv6 ospf 6 area 0
+
 
 3.---Baja VPN--
     ×Serial0/1/0: 2001:db8:abcd:0005::1/64
+
+     ipv6 router ospf 6
+     router-id 9.9.9.9
+     exit
+
+     interface Serial0/1/0
+     ipv6 ospf 6 area 0
+
 
 4.--Yettel Szeged--
     ×Serial0/2/0: 2001:db8:abcd:0006::1/64
