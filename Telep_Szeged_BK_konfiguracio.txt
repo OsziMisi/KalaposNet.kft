@@ -7,9 +7,13 @@ conf t
 host TELEKOM(WAN)
 ena sec class123
 no ip domain-l
-bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+bann motd banner motd #Unauthorized access is prohibited!#
 login block-for 60 attempts 2 within 30
 security passwords min-length 8
+
+username Telekom_Szeged password cisco123
+
+ipv6 uni
 
 lin con 0
 pass cisco123
@@ -39,6 +43,7 @@ exit
 interface Serial0/2/1
 clock rate 4000000
 ip address 30.30.70.1 255.255.255.252
+ipv6 add 2001:db8:abcd:0013::1/64
 description Telekom_Szeged fele
 no sh
 exit
@@ -58,7 +63,28 @@ network 30.30.30.0 0.0.0.3 area 0
 network 30.30.70.0 0.0.0.3 area 0
 exit
 
-ip domain-name cisco.com
+interface Serial0/2/1
+encapsulation ppp
+ppp authentication pap
+ppp pap sent-username WAN password cisco123
+description PAP Telekom_Szeged fele
+exit
+
+ip nat inside source static 172.16.81.2 30.30.70.10
+
+interface Serial0/1/0
+ip nat inside
+exit
+
+interface Serial0/1/1
+ip nat inside
+exit
+
+interface Serial0/2/1
+ip nat outside
+exit
+
+ip domain-name kalaposnet.hu
 crypto key generate rsa
 2048
 username rg secret cisco123
@@ -78,9 +104,13 @@ conf t
 host Telekom_Szeged
 ena sec class123
 no ip domain-l
-bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+bann motd banner motd #Unauthorized access is prohibited!#
 login block-for 60 attempts 2 within 30
 security passwords min-length 8
+
+username WAN password cisco123
+
+ipv6 uni
 
 lin con 0
 pass cisco123
@@ -97,6 +127,7 @@ ser pass
 interface S0/1/0
 clock rate 4000000
 ip address 30.30.90.5 255.255.255.252
+ipv6 add 2001:db8:abcd:0015::2/64
 description R_Szeged_Vezetoseg fele
 no sh
 exit
@@ -104,12 +135,24 @@ exit
 interface Serial0/1/1
 clock rate 4000000
 ip address 30.30.90.1 255.255.255.252
+ipv6 add 2001:db8:abcd:0016::3/64
 description R_Szeged_Adminisztracio fele
 no sh
 exit
 
+interface Serial0/2/0
+ipv6 add 2001:db8:abcd:0017::4/64
+description ISP_PEST fele
+no sh
+exit
+
 interface Serial0/2/1
+encapsulation ppp
+ppp authentication pap
+ppp pap sent-username Telekom_Szeged password cisco123
+clock rate 4000000
 ip address 30.30.70.2 255.255.255.252
+ipv6 add 2001:db8:abcd:0014::1/64
 description TELEKOM(WAN) fele
 no sh
 exit
@@ -122,7 +165,7 @@ network 30.30.90.4 0.0.0.3 area 0
 exit
 
 
-ip domain-name cisco.com
+ip domain-name kalaposnet.hu
 crypto key generate rsa
 2048
 username rg secret cisco123
@@ -143,9 +186,11 @@ conf t
 host Yettel_Szeged
 ena sec class123
 no ip domain-l
-bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+bann motd banner motd #Unauthorized access is prohibited!#
 login block-for 60 attempts 2 within 30
 security passwords min-length 8
+
+ipv6 uni
 
 lin con 0
 pass cisco123
@@ -161,17 +206,20 @@ ser pass
 
 interface s0/1/0
 ip address 30.30.80.5 255.255.255.252
+ipv6 add 2001:db8:abcd:0008::3/64
 description R_Szeged_Adminisztracio fele
 no sh
 exit
 
 interface Serial0/1/1
 ip address 30.30.80.1 255.255.255.252
+ipv6 add 2001:db8:abcd:0007::2/64
 description R_Szeged_Vezetoseg fele
 no sh
 exit
 
 interface Serial0/2/0
+ipv6 add 2001:db8:abcd:0006::1/64
 description R_Baja fele
 no sh
 exit
@@ -188,7 +236,7 @@ no auto
 exit
 
 
-ip domain-name cisco.com
+ip domain-name kalaposnet.hu
 crypto key generate rsa
 2048
 username rg secret cisco123
@@ -208,9 +256,11 @@ conf t
 host R_Szeged_Vezetoseg
 ena sec class123
 no ip domain-l
-bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+bann motd banner motd #Unauthorized access is prohibited!#
 login block-for 60 attempts 2 within 30
 security passwords min-length 8
+
+ipv6 uni
 
 lin con 0
 pass cisco123
@@ -240,6 +290,7 @@ dns-server 8.8.8.8
 
 interface Serial0/1/0
 ip address 30.30.90.6 255.255.255.252
+ipv6 add 2001:db8:abcd:0010::2/64
 description Telekom_Szeged fele
 no sh
 exit
@@ -247,6 +298,7 @@ exit
 interface Serial0/1/1
 clock rate 4000000
 ip address 30.30.80.2 255.255.255.252
+ipv6 add 2001:db8:abcd:0009::1/64
 description Yettel_Szeged fele
 no sh
 exit
@@ -297,7 +349,7 @@ network 30.30.90.4 0.0.0.3 area 0
 redistribute eigrp 10 subnets
 exit
 
-ip domain-name cisco.com
+ip domain-name kalaposnet.hu
 crypto key generate rsa
 2048
 username rg secret cisco123
@@ -318,9 +370,11 @@ conf t
 host R_Szeged_Adminisztracio
 ena sec class123
 no ip domain-l
-bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+bann motd banner motd #Unauthorized access is prohibited!#
 login block-for 60 attempts 2 within 30
 security passwords min-length 8
+
+ipv6 uni
 
 lin con 0
 pass cisco123
@@ -337,19 +391,21 @@ ser pass
 
 ip dhcp excluded-address 172.16.82.1 172.16.82.99
 ip dhcp excluded-address 172.16.82.151 172.16.82.254
-ip dhcp pool VLAN343_Adminisztracio
+ip dhcp pool VLAN342_Adminisztracio
 network 172.16.82.0 255.255.255.128
 default-router 172.16.82.1
 dns-server 8.8.8.8
 
 interface Serial0/1/0
 ip address 30.30.80.6 255.255.255.252
+ipv6 add 2001:db8:abcd:0011::1/64
 description Yettel_Szeged fele
 no sh
 exit
 
 interface Serial0/1/1
 ip address 30.30.90.2 255.255.255.252
+ipv6 add 2001:db8:abcd:0012::2/64
 description Telekom_Szeged fele
 no sh
 exit
@@ -378,7 +434,7 @@ exit
 
 interface g0/0/0.341
 encapsulation dot1Q 341
-ip address 172.16.81.1 255.255.255.128
+ip address 172.16.81.1 255.255.255.252
 description VLAN 341 fele
 no sh
 exit
@@ -394,6 +450,7 @@ router ospf 10
 router-id 6.6.6.6
 network 172.16.2.8 0.0.0.7 area 0
 network 30.30.90.0 0.0.0.3 area 0
+network 172.16.81.0 0.0.0.3 area 0
 network 172.16.82.0 0.0.0.127 area 0
 network 172.16.89.0 0.0.0.127 area 0
 passive-interface G0/0/0
@@ -407,7 +464,7 @@ no auto
 redistribute ospf 10 metric 100000 100 255 1 1500
 exit
 
-ip domain-name cisco.com
+ip domain-name kalaposnet.hu
 crypto key generate rsa
 2048
 username rg secret cisco123
@@ -427,7 +484,7 @@ conf t
 host MLS_Szeged_Vezet
 ena sec cisco123
 no ip domain-l
-bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+bann motd banner motd #Unauthorized access is prohibited!#
 
 
 lin con 0
@@ -475,7 +532,7 @@ conf t
 host MLS_Szeged_Vez_Vlan343
 ena sec cisco123
 no ip domain-l
-bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+bann motd banner motd #Unauthorized access is prohibited!#
 
 
 lin con 0
@@ -525,7 +582,7 @@ conf t
 host MLS_Szeged_Adminisztr_Vlan342
 ena sec cisco123
 no ip domain-l
-bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+bann motd banner motd #Unauthorized access is prohibited!#
 
 
 lin con 0
@@ -575,7 +632,7 @@ conf t
 host MLS_Szeged_admin_Vlan341
 ena sec cisco123
 no ip domain-l
-bann motd banner motd #Welcome to the network! Unauthorized access is prohibited!#
+bann motd banner motd #Unauthorized access is prohibited!#
 
 
 lin con 0
@@ -630,3 +687,13 @@ password Vezetoseg343.
 WLAN 10 -> Adminisztracio342
 SSID Adminisztracio
 password Adminisztracio342.
+
+-------------------------
+
+Nyomtató IP címek SAMBAHOZ :
+
+VLAN343_Vezetoseg
+172.16.83.5
+
+VLAN342_Adminisztracio
+172.16.82.5
