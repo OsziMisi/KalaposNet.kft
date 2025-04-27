@@ -751,3 +751,15 @@ ip helper-address 172.16.7.10
 
 
 
+ACL
+
+access-list BLOCK_HTTP_HTTPS extended deny tcp 172.16.122.0 255.255.255.128 any eq www
+access-list block extended deny tcp 172.16.122.0 255.255.255.128 any eq telnet
+access-list BLOCK_HTTP_HTTPS extended permit ip any any
+access-group BLOCK_HTTP_HTTPS in interface inside
+
+
+
+
+
+
