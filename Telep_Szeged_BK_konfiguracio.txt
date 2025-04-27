@@ -27,15 +27,10 @@ exec 5
 exit
 ser pass
 
-interface Serial0/1/0
-ip address 30.30.10.1 255.255.255.252
-description ISP_BAJA fele
-no sh
-exit
-
 interface Serial0/2/0
 clock rate 4000000
-ip address 30.30.30.1 255.255.255.252
+ipv6 addr 2001:DB8:ABCD:18::1/64
+ip address 30.30.120.1 255.255.255.252
 description ISP_PEST fele
 no sh
 exit
@@ -48,18 +43,9 @@ description Telekom_Szeged fele
 no sh
 exit
 
-router eigrp 10 
-eigrp router-id 1.1.1.1
-network 30.30.10.0 0.0.0.3
-network 30.30.30.0 0.0.0.3
-network 30.30.70.0 0.0.0.3
-no auto-summary 
-exit
-
 router ospf 10
 router-id 2.2.2.2
-network 30.30.10.0 0.0.0.3 area 0
-network 30.30.30.0 0.0.0.3 area 0
+network 30.30.120.0 0.0.0.3 area 0
 network 30.30.70.0 0.0.0.3 area 0
 exit
 
@@ -220,6 +206,7 @@ exit
 
 interface Serial0/2/0
 ipv6 add 2001:db8:abcd:0006::1/64
+ip addr 30.30.10.2 255.255.255.252
 description R_Baja fele
 no sh
 exit
@@ -230,6 +217,7 @@ exit
 
 router eigrp 10 
 eigrp router-id 4.4.4.4
+network 30.30.10.0 0.0.0.3
 network 30.30.80.0 0.0.0.3
 network 30.30.80.4 0.0.0.3
 no auto
